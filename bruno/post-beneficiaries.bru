@@ -1,0 +1,28 @@
+meta {
+  name: POST /beneficiaries
+  type: http
+  seq: 19
+}
+
+post {
+  url: {{baseUrl}}/beneficiaries
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "name": "Ama Mensah",
+    "bank": "Demo Bank",
+    "accountNumber": "001234567890",
+    "stepUpToken": "{{stepUpToken}}"
+  }
+}
+
+script:post-response {
+  if (res.body.id) bru.setVar("beneficiaryId", res.body.id);
+}

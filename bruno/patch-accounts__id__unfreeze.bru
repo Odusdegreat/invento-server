@@ -1,0 +1,15 @@
+meta {
+  name: PATCH /accounts/{id}/unfreeze
+  type: http
+  seq: 8
+}
+
+patch {
+  url: {{baseUrl}}/accounts/{{accountId}}/unfreeze
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}

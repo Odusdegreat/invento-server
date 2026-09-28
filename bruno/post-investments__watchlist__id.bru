@@ -1,0 +1,15 @@
+meta {
+  name: POST /investments/watchlist/{id}
+  type: http
+  seq: 34
+}
+
+post {
+  url: {{baseUrl}}/investments/watchlist/{{productId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}

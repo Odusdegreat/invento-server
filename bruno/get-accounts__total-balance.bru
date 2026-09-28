@@ -1,0 +1,15 @@
+meta {
+  name: GET /accounts/total-balance
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/accounts/total-balance
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}

@@ -1,0 +1,24 @@
+meta {
+  name: POST /cards
+  type: http
+  seq: 22
+}
+
+post {
+  url: {{baseUrl}}/cards
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "brand": "visa",
+    "label": "Simulated card",
+    "last4": "4242",
+    "expiry": "12/29"
+  }
+}

@@ -1,0 +1,15 @@
+meta {
+  name: POST /auth/step-up/biometric
+  type: http
+  seq: 61
+}
+
+post {
+  url: {{baseUrl}}/auth/step-up/biometric
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}

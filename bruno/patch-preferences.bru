@@ -1,0 +1,21 @@
+meta {
+  name: PATCH /preferences
+  type: http
+  seq: 46
+}
+
+patch {
+  url: {{baseUrl}}/preferences
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "currency": "USD"
+  }
+}

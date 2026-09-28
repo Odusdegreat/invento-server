@@ -1,0 +1,19 @@
+meta {
+  name: GET /beneficiaries
+  type: http
+  seq: 18
+}
+
+get {
+  url: {{baseUrl}}/beneficiaries
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+script:post-response {
+  if (res.body.length) bru.setVar("beneficiaryId", res.body[0].id);
+}

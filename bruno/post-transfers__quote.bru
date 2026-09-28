@@ -1,0 +1,23 @@
+meta {
+  name: POST /transfers/quote
+  type: http
+  seq: 14
+}
+
+post {
+  url: {{baseUrl}}/transfers/quote
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "fromAccountId": "{{accountId}}",
+    "amount": 100,
+    "currency": "USD"
+  }
+}

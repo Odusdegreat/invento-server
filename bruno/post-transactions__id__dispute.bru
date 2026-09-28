@@ -1,0 +1,21 @@
+meta {
+  name: POST /transactions/{id}/dispute
+  type: http
+  seq: 12
+}
+
+post {
+  url: {{baseUrl}}/transactions/{{transactionId}}/dispute
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "reason": "not_recognised"
+  }
+}

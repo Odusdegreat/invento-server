@@ -1,0 +1,15 @@
+meta {
+  name: GET /preferences
+  type: http
+  seq: 45
+}
+
+get {
+  url: {{baseUrl}}/preferences
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}

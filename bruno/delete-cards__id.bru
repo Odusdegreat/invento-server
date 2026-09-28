@@ -1,0 +1,15 @@
+meta {
+  name: DELETE /cards/{id}
+  type: http
+  seq: 27
+}
+
+delete {
+  url: {{baseUrl}}/cards/{{cardId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}

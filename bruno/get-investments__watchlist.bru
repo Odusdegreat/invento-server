@@ -1,0 +1,15 @@
+meta {
+  name: GET /investments/watchlist
+  type: http
+  seq: 33
+}
+
+get {
+  url: {{baseUrl}}/investments/watchlist
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}

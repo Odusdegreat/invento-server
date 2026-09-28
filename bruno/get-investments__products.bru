@@ -1,0 +1,19 @@
+meta {
+  name: GET /investments/products
+  type: http
+  seq: 28
+}
+
+get {
+  url: {{baseUrl}}/investments/products
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+script:post-response {
+  if (res.body.length) bru.setVar("productId", res.body[0].id);
+}

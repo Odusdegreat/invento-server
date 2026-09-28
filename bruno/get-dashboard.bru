@@ -1,0 +1,15 @@
+meta {
+  name: GET /dashboard
+  type: http
+  seq: 36
+}
+
+get {
+  url: {{baseUrl}}/dashboard
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}

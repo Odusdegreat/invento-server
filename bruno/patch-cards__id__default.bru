@@ -1,0 +1,15 @@
+meta {
+  name: PATCH /cards/{id}/default
+  type: http
+  seq: 23
+}
+
+patch {
+  url: {{baseUrl}}/cards/{{cardId}}/default
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}

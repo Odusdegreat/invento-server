@@ -1,0 +1,19 @@
+meta {
+  name: GET /cards
+  type: http
+  seq: 21
+}
+
+get {
+  url: {{baseUrl}}/cards
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+script:post-response {
+  if (res.body.length) bru.setVar("cardId", res.body[0].id);
+}

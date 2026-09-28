@@ -1,0 +1,15 @@
+meta {
+  name: DELETE /security/devices/{id}
+  type: http
+  seq: 44
+}
+
+delete {
+  url: {{baseUrl}}/security/devices/{{deviceId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}

@@ -1,0 +1,15 @@
+meta {
+  name: GET /investments/orders
+  type: http
+  seq: 31
+}
+
+get {
+  url: {{baseUrl}}/investments/orders
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}

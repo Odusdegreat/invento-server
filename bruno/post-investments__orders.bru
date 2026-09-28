@@ -1,0 +1,30 @@
+meta {
+  name: POST /investments/orders
+  type: http
+  seq: 32
+}
+
+post {
+  url: {{baseUrl}}/investments/orders
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+headers {
+  Idempotency-Key: {{idempotencyKey}}
+}
+
+body:json {
+  {
+    "productId": "{{productId}}",
+    "side": "buy",
+    "units": 1,
+    "price": 0,
+    "fee": 0,
+    "stepUpToken": "{{stepUpToken}}"
+  }
+}

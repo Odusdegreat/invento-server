@@ -1,0 +1,15 @@
+meta {
+  name: GET /transactions
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{baseUrl}}/transactions
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}

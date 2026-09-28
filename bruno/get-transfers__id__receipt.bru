@@ -1,0 +1,15 @@
+meta {
+  name: GET /transfers/{id}/receipt
+  type: http
+  seq: 17
+}
+
+get {
+  url: {{baseUrl}}/transfers/{{transferId}}/receipt
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}

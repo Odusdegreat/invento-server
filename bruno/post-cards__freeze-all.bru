@@ -1,0 +1,21 @@
+meta {
+  name: POST /cards/freeze-all
+  type: http
+  seq: 26
+}
+
+post {
+  url: {{baseUrl}}/cards/freeze-all
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "frozen": true
+  }
+}

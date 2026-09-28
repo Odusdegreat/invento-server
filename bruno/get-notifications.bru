@@ -1,0 +1,19 @@
+meta {
+  name: GET /notifications
+  type: http
+  seq: 37
+}
+
+get {
+  url: {{baseUrl}}/notifications
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+script:post-response {
+  if (res.body.length) bru.setVar("notificationId", res.body[0].id);
+}

@@ -1,0 +1,26 @@
+meta {
+  name: POST /auth/step-up/verify
+  type: http
+  seq: 56
+}
+
+post {
+  url: {{baseUrl}}/auth/step-up/verify
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "pin": "{{pin}}",
+    "action": "{{action}}"
+  }
+}
+
+script:post-response {
+  if (res.body.stepUpToken) bru.setVar("stepUpToken", res.body.stepUpToken);
+}

@@ -1,0 +1,21 @@
+meta {
+  name: PATCH /security
+  type: http
+  seq: 42
+}
+
+patch {
+  url: {{baseUrl}}/security
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "transactionAlerts": true
+  }
+}

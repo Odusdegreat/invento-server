@@ -1,0 +1,34 @@
+meta {
+  name: POST /transfers
+  type: http
+  seq: 15
+}
+
+post {
+  url: {{baseUrl}}/transfers
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+headers {
+  Idempotency-Key: {{idempotencyKey}}
+}
+
+body:json {
+  {
+    "fromAccountId": "{{accountId}}",
+    "beneficiaryId": "{{beneficiaryId}}",
+    "amount": 100,
+    "fee": 0,
+    "note": "Simulated transfer",
+    "stepUpToken": "{{stepUpToken}}"
+  }
+}
+
+script:post-response {
+  if (res.body.id) { bru.setVar("transferId", res.body.id); bru.setVar("transactionId", res.body.transactionId); }
+}

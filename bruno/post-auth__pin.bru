@@ -1,0 +1,23 @@
+meta {
+  name: POST /auth/pin
+  type: http
+  seq: 58
+}
+
+post {
+  url: {{baseUrl}}/auth/pin
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "pin": "{{pin}}",
+    "confirmPin": "{{pin}}",
+    "stepUpToken": "{{stepUpToken}}"
+  }
+}

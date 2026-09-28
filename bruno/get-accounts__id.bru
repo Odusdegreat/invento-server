@@ -1,0 +1,15 @@
+meta {
+  name: GET /accounts/{id}
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/accounts/{{accountId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}

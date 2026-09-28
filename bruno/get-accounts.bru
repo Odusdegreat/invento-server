@@ -1,0 +1,19 @@
+meta {
+  name: GET /accounts
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/accounts
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+script:post-response {
+  if (res.body.length) bru.setVar("accountId", res.body[0].id);
+}

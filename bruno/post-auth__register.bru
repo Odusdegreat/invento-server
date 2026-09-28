@@ -1,0 +1,25 @@
+meta {
+  name: POST /auth/register
+  type: http
+  seq: 47
+}
+
+post {
+  url: {{baseUrl}}/auth/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "{{email}}",
+    "password": "{{password}}",
+    "fullName": "Demo Customer",
+    "phone": "+15550102288",
+    "deviceName": "Bruno"
+  }
+}
+
+script:post-response {
+  if (res.body.accessToken) { bru.setEnvVar("accessToken", res.body.accessToken); bru.setEnvVar("refreshToken", res.body.refreshToken); }
+}

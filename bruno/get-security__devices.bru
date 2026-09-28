@@ -1,0 +1,15 @@
+meta {
+  name: GET /security/devices
+  type: http
+  seq: 43
+}
+
+get {
+  url: {{baseUrl}}/security/devices
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}

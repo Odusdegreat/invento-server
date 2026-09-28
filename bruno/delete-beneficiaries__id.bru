@@ -1,0 +1,15 @@
+meta {
+  name: DELETE /beneficiaries/{id}
+  type: http
+  seq: 20
+}
+
+delete {
+  url: {{baseUrl}}/beneficiaries/{{beneficiaryId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
