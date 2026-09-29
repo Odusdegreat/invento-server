@@ -1,7 +1,7 @@
 meta {
   name: POST /auth/login
   type: http
-  seq: 48
+  seq: 66
 }
 
 post {
@@ -19,5 +19,7 @@ body:json {
 }
 
 script:post-response {
-  if (res.body.accessToken) { bru.setEnvVar("accessToken", res.body.accessToken); bru.setEnvVar("refreshToken", res.body.refreshToken); }
+  if (res.body.accessToken) { bru.setVar("accessToken", res.body.accessToken); bru.setVar("refreshToken", res.body.refreshToken); }
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
 }

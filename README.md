@@ -40,7 +40,7 @@ PIN confirmation requires an authenticated session and an explicit action. Token
 
 ## Mobile contract
 
-Read [adapter notes](docs/mobile-integration.md) and the [completed endpoint/security flows](docs/endpoint-completion.md). Consumer routes support `/api/v1` and legacy unprefixed aliases. Successful bodies are direct objects/arrays, without a `data` wrapper. Errors are `{ code, message, requestId }`. Logs exclude secrets, bodies and query values. Request IDs are in `X-Request-Id`.
+Read the [frontend endpoint reference](docs/frontend-endpoints.md) for the complete list of client-facing routes with request bodies, then the [adapter notes](docs/mobile-integration.md) and the [completed endpoint/security flows](docs/endpoint-completion.md). Consumer routes use the original unprefixed paths, such as `/accounts` and `/auth/login`. Successful bodies are direct objects/arrays, without a `data` wrapper. Errors are `{ code, message, requestId }`. Logs exclude secrets, bodies and query values. Request IDs are in `X-Request-Id`.
 
 Transactions and notifications support `limit` (default 50, maximum 100) and `before` (UUID cursor). `X-Next-Cursor` indicates another page may exist. Transaction filters: `accountId`, `category`, `kind`. `/transactions/summary` returns completed lifetime inflow/outflow per currency.
 
@@ -59,6 +59,8 @@ Apply migrations to that separate local test database first, using `DATABASE_URL
 Tests cover ownership, PIN scope/expiry/replay/lockout, transfer fees, concurrent overspending, rollback, ledger constraints, investment holdings, notifications, security downgrades, cards, preferences, disputes, password reset/change, refresh replay, device revocation and logout.
 
 ## Prototype boundaries
+
+Paystack test card linking is available; see [setup and client flow](docs/paystack.md). Migration `004_paystack_links.sql` is required. The integration accepts test secrets only and does not fund account balances.
 
 - Transactions and dashboard totals support USD. `/accounts/summary` can convert display totals using explicitly simulated sample rates; no actual currency exchange occurs.
 - Prices are static simulations with `pricedAt`, `priceUnit` and `tradable`. No market feed, scheduler or trading calendar is integrated.

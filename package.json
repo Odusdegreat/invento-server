@@ -20,8 +20,10 @@
     "test:watch": "vitest",
     "test:cov": "vitest run --coverage",
     "test:debug": "vitest --inspect-brk --no-file-parallelism",
-    "test:e2e": "bun run build && node --test --test-concurrency=1 test/flow.e2e.mjs test/auth-security.e2e.mjs test/gaps.e2e.mjs",
+    "test:e2e": "bun run build && node --test --test-concurrency=1 test/flow.e2e.mjs test/auth-security.e2e.mjs test/gaps.e2e.mjs test/paystack.e2e.mjs test/sandbox.e2e.mjs",
+    "db:seed:sandbox": "bun run build && node --env-file=.env scripts/seed-sandbox.mjs",
     "db:migrate": "node --env-file=.env scripts/migrate.mjs",
+    "db:baseline": "node --env-file=.env scripts/baseline-migrations.mjs",
     "db:seed": "bun run build && node --env-file=.env scripts/seed.mjs",
     "bruno:generate": "node scripts/generate-bruno.mjs",
     "docs:export": "bun run build && node scripts/export-openapi.mjs"

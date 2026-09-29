@@ -1,7 +1,7 @@
 meta {
   name: POST /auth/pin/set
   type: http
-  seq: 57
+  seq: 75
 }
 
 post {
@@ -17,6 +17,12 @@ auth:bearer {
 body:json {
   {
     "pin": "{{pin}}",
-    "confirmPin": "{{pin}}"
+    "confirmPin": "{{pin}}",
+    "setupToken": "{{setupToken}}"
   }
+}
+
+script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
 }

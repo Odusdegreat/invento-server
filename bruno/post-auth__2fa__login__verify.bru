@@ -1,0 +1,24 @@
+meta {
+  name: POST /auth/2fa/login/verify
+  type: http
+  seq: 84
+}
+
+post {
+  url: {{baseUrl}}/auth/2fa/login/verify
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "challengeToken": "{{challengeToken}}",
+    "code": "{{otpCode}}"
+  }
+}
+
+script:post-response {
+  if (res.body.accessToken) { bru.setVar("accessToken", res.body.accessToken); bru.setVar("refreshToken", res.body.refreshToken); }
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
+}

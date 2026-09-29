@@ -1,0 +1,27 @@
+meta {
+  name: POST /auth/biometric/registration/verify
+  type: http
+  seq: 87
+}
+
+post {
+  url: {{baseUrl}}/auth/biometric/registration/verify
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "challengeToken": "{{challengeToken}}",
+    "response": {}
+  }
+}
+
+script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
+}

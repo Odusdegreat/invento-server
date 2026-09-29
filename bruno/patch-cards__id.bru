@@ -1,0 +1,27 @@
+meta {
+  name: PATCH /cards/{id}
+  type: http
+  seq: 26
+}
+
+patch {
+  url: {{baseUrl}}/cards/{{cardId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "label": "Updated nickname",
+    "frozen": false
+  }
+}
+
+script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
+}

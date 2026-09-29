@@ -1,7 +1,7 @@
 meta {
   name: POST /beneficiaries
   type: http
-  seq: 19
+  seq: 21
 }
 
 post {
@@ -24,5 +24,7 @@ body:json {
 }
 
 script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
   if (res.body.id) bru.setVar("beneficiaryId", res.body.id);
 }

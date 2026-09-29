@@ -1,0 +1,3515 @@
+{
+  "migrations": [
+    {
+      "name": "001_foundation.sql",
+      "checksum": "f3cf5daf4025dd88309b3795e4ef8a6b60ad52a9808918ae98f6dbff80a2ed27"
+    },
+    {
+      "name": "002_integrity.sql",
+      "checksum": "9ed165d1e41675136feeb3bed6ac0a911ec2d82c7fa3cf6d400ff68bfd1f6cad"
+    },
+    {
+      "name": "003_api_security.sql",
+      "checksum": "16e41243a48ae5636544b058e9e533f6533f1c607e8b6fbe2121eecd35845039"
+    },
+    {
+      "name": "004_paystack_links.sql",
+      "checksum": "1678cf0ac61ac7221d39394be3211dec0866d726eca731325cdaa465e45f1b42"
+    }
+  ],
+  "schema": {
+    "relations": [
+      {
+        "name": "account_balances",
+        "kind": "v",
+        "rls": false,
+        "force_rls": false
+      },
+      {
+        "name": "accounts",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "auth_challenges",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "beneficiaries",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "biometric_credentials",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "cards",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "devices",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "disputes",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "email_verification_tokens",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "fx_rates",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "holdings",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "idempotency_keys",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "investment_orders",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "investment_products",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "journal_entries",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "ledger_accounts",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "mfa_credentials",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "notifications",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "password_reset_tokens",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "paystack_card_links",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "postings",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "preferences",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "price_history",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "push_tokens",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "refresh_tokens",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "security_settings",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "step_up_tokens",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "transactions",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "transfers",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "users",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      },
+      {
+        "name": "watchlists",
+        "kind": "r",
+        "rls": true,
+        "force_rls": false
+      }
+    ],
+    "columns": [
+      {
+        "relation": "account_balances",
+        "name": "balanceMinor",
+        "type": "bigint",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "account_balances",
+        "name": "id",
+        "type": "uuid",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "accounts",
+        "name": "createdAt",
+        "type": "timestamp with time zone",
+        "required": true,
+        "default_value": "now()",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "accounts",
+        "name": "currency",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "accounts",
+        "name": "frozen",
+        "type": "boolean",
+        "required": true,
+        "default_value": "false",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "accounts",
+        "name": "id",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "accounts",
+        "name": "interestRate",
+        "type": "numeric",
+        "required": true,
+        "default_value": "0",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "accounts",
+        "name": "kind",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "accounts",
+        "name": "maskedNumber",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "accounts",
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "accounts",
+        "name": "userId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "auth_challenges",
+        "name": "action",
+        "type": "text",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "auth_challenges",
+        "name": "consumedAt",
+        "type": "timestamp with time zone",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "auth_challenges",
+        "name": "deviceId",
+        "type": "uuid",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "auth_challenges",
+        "name": "expiresAt",
+        "type": "timestamp with time zone",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "auth_challenges",
+        "name": "id",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "auth_challenges",
+        "name": "payload",
+        "type": "jsonb",
+        "required": true,
+        "default_value": "'{}'::jsonb",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "auth_challenges",
+        "name": "purpose",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "auth_challenges",
+        "name": "tokenHash",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "auth_challenges",
+        "name": "userId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "beneficiaries",
+        "name": "accountNumber",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "beneficiaries",
+        "name": "bank",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "beneficiaries",
+        "name": "createdAt",
+        "type": "timestamp with time zone",
+        "required": true,
+        "default_value": "now()",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "beneficiaries",
+        "name": "deletedAt",
+        "type": "timestamp with time zone",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "beneficiaries",
+        "name": "id",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "beneficiaries",
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "beneficiaries",
+        "name": "userId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "biometric_credentials",
+        "name": "counter",
+        "type": "bigint",
+        "required": true,
+        "default_value": "0",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "biometric_credentials",
+        "name": "createdAt",
+        "type": "timestamp with time zone",
+        "required": true,
+        "default_value": "now()",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "biometric_credentials",
+        "name": "deviceType",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "biometric_credentials",
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "biometric_credentials",
+        "name": "publicKey",
+        "type": "bytea",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "biometric_credentials",
+        "name": "revokedAt",
+        "type": "timestamp with time zone",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "biometric_credentials",
+        "name": "userId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "cards",
+        "name": "brand",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "cards",
+        "name": "expiry",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "cards",
+        "name": "frozen",
+        "type": "boolean",
+        "required": true,
+        "default_value": "false",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "cards",
+        "name": "holder",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "cards",
+        "name": "id",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "cards",
+        "name": "isDefault",
+        "type": "boolean",
+        "required": true,
+        "default_value": "false",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "cards",
+        "name": "label",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "cards",
+        "name": "last4",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "cards",
+        "name": "userId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "devices",
+        "name": "createdAt",
+        "type": "timestamp with time zone",
+        "required": true,
+        "default_value": "now()",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "devices",
+        "name": "id",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "devices",
+        "name": "lastActiveAt",
+        "type": "timestamp with time zone",
+        "required": true,
+        "default_value": "now()",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "devices",
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "devices",
+        "name": "revokedAt",
+        "type": "timestamp with time zone",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "devices",
+        "name": "trusted",
+        "type": "boolean",
+        "required": true,
+        "default_value": "false",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "devices",
+        "name": "userId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "disputes",
+        "name": "createdAt",
+        "type": "timestamp with time zone",
+        "required": true,
+        "default_value": "now()",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "disputes",
+        "name": "id",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "disputes",
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "disputes",
+        "name": "resolution",
+        "type": "text",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "disputes",
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "default_value": "'open'::text",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "disputes",
+        "name": "transactionId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "disputes",
+        "name": "userId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "email_verification_tokens",
+        "name": "consumedAt",
+        "type": "timestamp with time zone",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "email_verification_tokens",
+        "name": "email",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "email_verification_tokens",
+        "name": "expiresAt",
+        "type": "timestamp with time zone",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "email_verification_tokens",
+        "name": "id",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "email_verification_tokens",
+        "name": "tokenHash",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "email_verification_tokens",
+        "name": "userId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "fx_rates",
+        "name": "asOf",
+        "type": "timestamp with time zone",
+        "required": true,
+        "default_value": "now()",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "fx_rates",
+        "name": "currency",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "fx_rates",
+        "name": "unitsPerUsd",
+        "type": "numeric(24,8)",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "holdings",
+        "name": "addedAt",
+        "type": "timestamp with time zone",
+        "required": true,
+        "default_value": "now()",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "holdings",
+        "name": "averageCost",
+        "type": "numeric(18,6)",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "holdings",
+        "name": "id",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "holdings",
+        "name": "productId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "holdings",
+        "name": "units",
+        "type": "numeric(24,8)",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "holdings",
+        "name": "userId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "idempotency_keys",
+        "name": "key",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "idempotency_keys",
+        "name": "requestHash",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "idempotency_keys",
+        "name": "response",
+        "type": "jsonb",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "idempotency_keys",
+        "name": "userId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_orders",
+        "name": "accountId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_orders",
+        "name": "createdAt",
+        "type": "timestamp with time zone",
+        "required": true,
+        "default_value": "now()",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_orders",
+        "name": "fee",
+        "type": "numeric(18,2)",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_orders",
+        "name": "id",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_orders",
+        "name": "journalEntryId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_orders",
+        "name": "price",
+        "type": "numeric(18,6)",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_orders",
+        "name": "productId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_orders",
+        "name": "realizedGain",
+        "type": "numeric(18,2)",
+        "required": true,
+        "default_value": "0",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_orders",
+        "name": "side",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_orders",
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_orders",
+        "name": "total",
+        "type": "numeric(18,2)",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_orders",
+        "name": "units",
+        "type": "numeric(24,8)",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_orders",
+        "name": "userId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_products",
+        "name": "assetClass",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_products",
+        "name": "currency",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_products",
+        "name": "description",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_products",
+        "name": "id",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_products",
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_products",
+        "name": "previousClose",
+        "type": "numeric(18,6)",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_products",
+        "name": "price",
+        "type": "numeric(18,6)",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_products",
+        "name": "priceUnit",
+        "type": "text",
+        "required": true,
+        "default_value": "'unit'::text",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_products",
+        "name": "pricedAt",
+        "type": "timestamp with time zone",
+        "required": true,
+        "default_value": "now()",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_products",
+        "name": "provider",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_products",
+        "name": "risk",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_products",
+        "name": "ticker",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_products",
+        "name": "tradable",
+        "type": "boolean",
+        "required": true,
+        "default_value": "true",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "investment_products",
+        "name": "yieldPercent",
+        "type": "numeric",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "journal_entries",
+        "name": "createdAt",
+        "type": "timestamp with time zone",
+        "required": true,
+        "default_value": "now()",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "journal_entries",
+        "name": "id",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "journal_entries",
+        "name": "reference",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "ledger_accounts",
+        "name": "accountId",
+        "type": "uuid",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "ledger_accounts",
+        "name": "currency",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "ledger_accounts",
+        "name": "id",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "ledger_accounts",
+        "name": "purpose",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "mfa_credentials",
+        "name": "attempts",
+        "type": "integer",
+        "required": true,
+        "default_value": "0",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "mfa_credentials",
+        "name": "lastCounter",
+        "type": "bigint",
+        "required": true,
+        "default_value": "'-1'::integer",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "mfa_credentials",
+        "name": "lockedUntil",
+        "type": "timestamp with time zone",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "mfa_credentials",
+        "name": "pendingEncrypted",
+        "type": "text",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "mfa_credentials",
+        "name": "pendingExpiresAt",
+        "type": "timestamp with time zone",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "mfa_credentials",
+        "name": "secretEncrypted",
+        "type": "text",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "mfa_credentials",
+        "name": "userId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "notifications",
+        "name": "body",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "notifications",
+        "name": "createdAt",
+        "type": "timestamp with time zone",
+        "required": true,
+        "default_value": "now()",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "notifications",
+        "name": "id",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "notifications",
+        "name": "kind",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "notifications",
+        "name": "read",
+        "type": "boolean",
+        "required": true,
+        "default_value": "false",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "notifications",
+        "name": "targetId",
+        "type": "uuid",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "notifications",
+        "name": "targetType",
+        "type": "text",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "notifications",
+        "name": "title",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "notifications",
+        "name": "userId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "password_reset_tokens",
+        "name": "consumedAt",
+        "type": "timestamp with time zone",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "password_reset_tokens",
+        "name": "expiresAt",
+        "type": "timestamp with time zone",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "password_reset_tokens",
+        "name": "id",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "password_reset_tokens",
+        "name": "tokenHash",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "password_reset_tokens",
+        "name": "userId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "paystack_card_links",
+        "name": "cardId",
+        "type": "uuid",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "paystack_card_links",
+        "name": "completedAt",
+        "type": "timestamp with time zone",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "paystack_card_links",
+        "name": "createdAt",
+        "type": "timestamp with time zone",
+        "required": true,
+        "default_value": "now()",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "paystack_card_links",
+        "name": "email",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "paystack_card_links",
+        "name": "reference",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "paystack_card_links",
+        "name": "userId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "postings",
+        "name": "amountMinor",
+        "type": "bigint",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "postings",
+        "name": "createdAt",
+        "type": "timestamp with time zone",
+        "required": true,
+        "default_value": "now()",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "postings",
+        "name": "id",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "postings",
+        "name": "journalEntryId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "postings",
+        "name": "ledgerAccountId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "postings",
+        "name": "side",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "preferences",
+        "name": "currency",
+        "type": "text",
+        "required": true,
+        "default_value": "'USD'::text",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "preferences",
+        "name": "userId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "price_history",
+        "name": "createdAt",
+        "type": "timestamp with time zone",
+        "required": true,
+        "default_value": "now()",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "price_history",
+        "name": "id",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "price_history",
+        "name": "price",
+        "type": "numeric(18,6)",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "price_history",
+        "name": "productId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "push_tokens",
+        "name": "createdAt",
+        "type": "timestamp with time zone",
+        "required": true,
+        "default_value": "now()",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "push_tokens",
+        "name": "deviceId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "push_tokens",
+        "name": "id",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "push_tokens",
+        "name": "provider",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "push_tokens",
+        "name": "token",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "push_tokens",
+        "name": "userId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "refresh_tokens",
+        "name": "deviceId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "refresh_tokens",
+        "name": "expiresAt",
+        "type": "timestamp with time zone",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "refresh_tokens",
+        "name": "id",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "refresh_tokens",
+        "name": "revokedAt",
+        "type": "timestamp with time zone",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "refresh_tokens",
+        "name": "tokenHash",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "refresh_tokens",
+        "name": "userId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "security_settings",
+        "name": "autoLock",
+        "type": "integer",
+        "required": true,
+        "default_value": "60",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "security_settings",
+        "name": "biometricsEnabled",
+        "type": "boolean",
+        "required": true,
+        "default_value": "false",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "security_settings",
+        "name": "loginAlerts",
+        "type": "boolean",
+        "required": true,
+        "default_value": "true",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "security_settings",
+        "name": "pinAttempts",
+        "type": "integer",
+        "required": true,
+        "default_value": "0",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "security_settings",
+        "name": "pinHash",
+        "type": "text",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "security_settings",
+        "name": "pinLockedUntil",
+        "type": "timestamp with time zone",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "security_settings",
+        "name": "transactionAlerts",
+        "type": "boolean",
+        "required": true,
+        "default_value": "true",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "security_settings",
+        "name": "twoFactorEnabled",
+        "type": "boolean",
+        "required": true,
+        "default_value": "false",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "security_settings",
+        "name": "userId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "step_up_tokens",
+        "name": "action",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "step_up_tokens",
+        "name": "consumedAt",
+        "type": "timestamp with time zone",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "step_up_tokens",
+        "name": "deviceId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "step_up_tokens",
+        "name": "expiresAt",
+        "type": "timestamp with time zone",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "step_up_tokens",
+        "name": "id",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "step_up_tokens",
+        "name": "tokenHash",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "step_up_tokens",
+        "name": "userId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transactions",
+        "name": "accountId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transactions",
+        "name": "amount",
+        "type": "numeric(18,2)",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transactions",
+        "name": "cardLast4",
+        "type": "text",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transactions",
+        "name": "category",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transactions",
+        "name": "counterparty",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transactions",
+        "name": "createdAt",
+        "type": "timestamp with time zone",
+        "required": true,
+        "default_value": "now()",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transactions",
+        "name": "currency",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transactions",
+        "name": "description",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transactions",
+        "name": "fee",
+        "type": "numeric(18,2)",
+        "required": true,
+        "default_value": "0",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transactions",
+        "name": "id",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transactions",
+        "name": "journalEntryId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transactions",
+        "name": "kind",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transactions",
+        "name": "reference",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transactions",
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transactions",
+        "name": "userId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transfers",
+        "name": "amount",
+        "type": "numeric(18,2)",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transfers",
+        "name": "beneficiaryId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transfers",
+        "name": "createdAt",
+        "type": "timestamp with time zone",
+        "required": true,
+        "default_value": "now()",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transfers",
+        "name": "currency",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transfers",
+        "name": "fee",
+        "type": "numeric(18,2)",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transfers",
+        "name": "fromAccountId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transfers",
+        "name": "id",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transfers",
+        "name": "note",
+        "type": "text",
+        "required": true,
+        "default_value": "''::text",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transfers",
+        "name": "reference",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transfers",
+        "name": "status",
+        "type": "text",
+        "required": true,
+        "default_value": "'completed'::text",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transfers",
+        "name": "transactionId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "transfers",
+        "name": "userId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "users",
+        "name": "avatarUri",
+        "type": "text",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "users",
+        "name": "email",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "users",
+        "name": "emailVerified",
+        "type": "boolean",
+        "required": true,
+        "default_value": "false",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "users",
+        "name": "fullName",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "users",
+        "name": "id",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "users",
+        "name": "kycVerified",
+        "type": "boolean",
+        "required": true,
+        "default_value": "false",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "users",
+        "name": "loginAttempts",
+        "type": "integer",
+        "required": true,
+        "default_value": "0",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "users",
+        "name": "loginLockedUntil",
+        "type": "timestamp with time zone",
+        "required": false,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "users",
+        "name": "memberSince",
+        "type": "timestamp with time zone",
+        "required": true,
+        "default_value": "now()",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "users",
+        "name": "passwordHash",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "users",
+        "name": "phone",
+        "type": "text",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "users",
+        "name": "tier",
+        "type": "text",
+        "required": true,
+        "default_value": "'standard'::text",
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "watchlists",
+        "name": "productId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      },
+      {
+        "relation": "watchlists",
+        "name": "userId",
+        "type": "uuid",
+        "required": true,
+        "default_value": null,
+        "identity": "",
+        "generated": ""
+      }
+    ],
+    "constraints": [
+      {
+        "relation": "accounts",
+        "name": "accounts_currency_check",
+        "definition": "CHECK ((currency ~ '^[A-Z]{3}$'::text))",
+        "validated": true
+      },
+      {
+        "relation": "accounts",
+        "name": "accounts_id_userId_key",
+        "definition": "UNIQUE (id, \"userId\")",
+        "validated": true
+      },
+      {
+        "relation": "accounts",
+        "name": "accounts_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "relation": "accounts",
+        "name": "accounts_userId_fkey",
+        "definition": "FOREIGN KEY (\"userId\") REFERENCES invento.users(id)",
+        "validated": true
+      },
+      {
+        "relation": "auth_challenges",
+        "name": "auth_challenges_deviceId_fkey",
+        "definition": "FOREIGN KEY (\"deviceId\") REFERENCES invento.devices(id)",
+        "validated": true
+      },
+      {
+        "relation": "auth_challenges",
+        "name": "auth_challenges_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "relation": "auth_challenges",
+        "name": "auth_challenges_purpose_check",
+        "definition": "CHECK ((purpose = ANY (ARRAY['pin_setup'::text, 'mfa_login'::text, 'webauthn_registration'::text, 'webauthn_authentication'::text])))",
+        "validated": true
+      },
+      {
+        "relation": "auth_challenges",
+        "name": "auth_challenges_tokenHash_key",
+        "definition": "UNIQUE (\"tokenHash\")",
+        "validated": true
+      },
+      {
+        "relation": "auth_challenges",
+        "name": "auth_challenges_userId_fkey",
+        "definition": "FOREIGN KEY (\"userId\") REFERENCES invento.users(id)",
+        "validated": true
+      },
+      {
+        "relation": "beneficiaries",
+        "name": "beneficiaries_id_userId_key",
+        "definition": "UNIQUE (id, \"userId\")",
+        "validated": true
+      },
+      {
+        "relation": "beneficiaries",
+        "name": "beneficiaries_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "relation": "beneficiaries",
+        "name": "beneficiaries_userId_fkey",
+        "definition": "FOREIGN KEY (\"userId\") REFERENCES invento.users(id)",
+        "validated": true
+      },
+      {
+        "relation": "biometric_credentials",
+        "name": "biometric_credentials_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "relation": "biometric_credentials",
+        "name": "biometric_credentials_userId_fkey",
+        "definition": "FOREIGN KEY (\"userId\") REFERENCES invento.users(id)",
+        "validated": true
+      },
+      {
+        "relation": "cards",
+        "name": "cards_brand_check",
+        "definition": "CHECK ((brand = ANY (ARRAY['visa'::text, 'mastercard'::text, 'amex'::text, 'paystack'::text, 'bank'::text])))",
+        "validated": true
+      },
+      {
+        "relation": "cards",
+        "name": "cards_expiry_check",
+        "definition": "CHECK ((expiry ~ '^(0[1-9]|1[0-2])/[0-9]{2}$'::text))",
+        "validated": true
+      },
+      {
+        "relation": "cards",
+        "name": "cards_last4_check",
+        "definition": "CHECK ((last4 ~ '^[0-9]{4}$'::text))",
+        "validated": true
+      },
+      {
+        "relation": "cards",
+        "name": "cards_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "relation": "cards",
+        "name": "cards_userId_fkey",
+        "definition": "FOREIGN KEY (\"userId\") REFERENCES invento.users(id)",
+        "validated": true
+      },
+      {
+        "relation": "devices",
+        "name": "devices_id_userId_key",
+        "definition": "UNIQUE (id, \"userId\")",
+        "validated": true
+      },
+      {
+        "relation": "devices",
+        "name": "devices_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "relation": "devices",
+        "name": "devices_userId_fkey",
+        "definition": "FOREIGN KEY (\"userId\") REFERENCES invento.users(id)",
+        "validated": true
+      },
+      {
+        "relation": "disputes",
+        "name": "disputes_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "relation": "disputes",
+        "name": "disputes_reason_check",
+        "definition": "CHECK ((reason = ANY (ARRAY['not_recognised'::text, 'wrong_amount'::text])))",
+        "validated": true
+      },
+      {
+        "relation": "disputes",
+        "name": "disputes_status_check",
+        "definition": "CHECK ((status = ANY (ARRAY['open'::text, 'reviewing'::text, 'resolved'::text, 'rejected'::text])))",
+        "validated": true
+      },
+      {
+        "relation": "disputes",
+        "name": "disputes_transactionId_fkey",
+        "definition": "FOREIGN KEY (\"transactionId\") REFERENCES invento.transactions(id)",
+        "validated": true
+      },
+      {
+        "relation": "disputes",
+        "name": "disputes_transactionId_userId_fkey",
+        "definition": "FOREIGN KEY (\"transactionId\", \"userId\") REFERENCES invento.transactions(id, \"userId\")",
+        "validated": true
+      },
+      {
+        "relation": "disputes",
+        "name": "disputes_userId_fkey",
+        "definition": "FOREIGN KEY (\"userId\") REFERENCES invento.users(id)",
+        "validated": true
+      },
+      {
+        "relation": "disputes",
+        "name": "disputes_userId_transactionId_key",
+        "definition": "UNIQUE (\"userId\", \"transactionId\")",
+        "validated": true
+      },
+      {
+        "relation": "email_verification_tokens",
+        "name": "email_verification_tokens_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "relation": "email_verification_tokens",
+        "name": "email_verification_tokens_tokenHash_key",
+        "definition": "UNIQUE (\"tokenHash\")",
+        "validated": true
+      },
+      {
+        "relation": "email_verification_tokens",
+        "name": "email_verification_tokens_userId_fkey",
+        "definition": "FOREIGN KEY (\"userId\") REFERENCES invento.users(id)",
+        "validated": true
+      },
+      {
+        "relation": "fx_rates",
+        "name": "fx_rates_currency_check",
+        "definition": "CHECK ((currency ~ '^[A-Z]{3}$'::text))",
+        "validated": true
+      },
+      {
+        "relation": "fx_rates",
+        "name": "fx_rates_pkey",
+        "definition": "PRIMARY KEY (currency)",
+        "validated": true
+      },
+      {
+        "relation": "fx_rates",
+        "name": "fx_rates_unitsPerUsd_check",
+        "definition": "CHECK ((\"unitsPerUsd\" > (0)::numeric))",
+        "validated": true
+      },
+      {
+        "relation": "holdings",
+        "name": "holdings_averageCost_check",
+        "definition": "CHECK ((\"averageCost\" >= (0)::numeric))",
+        "validated": true
+      },
+      {
+        "relation": "holdings",
+        "name": "holdings_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "relation": "holdings",
+        "name": "holdings_productId_fkey",
+        "definition": "FOREIGN KEY (\"productId\") REFERENCES invento.investment_products(id)",
+        "validated": true
+      },
+      {
+        "relation": "holdings",
+        "name": "holdings_units_check",
+        "definition": "CHECK ((units >= (0)::numeric))",
+        "validated": true
+      },
+      {
+        "relation": "holdings",
+        "name": "holdings_userId_fkey",
+        "definition": "FOREIGN KEY (\"userId\") REFERENCES invento.users(id)",
+        "validated": true
+      },
+      {
+        "relation": "holdings",
+        "name": "holdings_userId_productId_key",
+        "definition": "UNIQUE (\"userId\", \"productId\")",
+        "validated": true
+      },
+      {
+        "relation": "idempotency_keys",
+        "name": "idempotency_keys_pkey",
+        "definition": "PRIMARY KEY (\"userId\", key)",
+        "validated": true
+      },
+      {
+        "relation": "idempotency_keys",
+        "name": "idempotency_keys_userId_fkey",
+        "definition": "FOREIGN KEY (\"userId\") REFERENCES invento.users(id)",
+        "validated": true
+      },
+      {
+        "relation": "investment_orders",
+        "name": "investment_orders_accountId_fkey",
+        "definition": "FOREIGN KEY (\"accountId\") REFERENCES invento.accounts(id)",
+        "validated": true
+      },
+      {
+        "relation": "investment_orders",
+        "name": "investment_orders_accountId_userId_fkey",
+        "definition": "FOREIGN KEY (\"accountId\", \"userId\") REFERENCES invento.accounts(id, \"userId\")",
+        "validated": true
+      },
+      {
+        "relation": "investment_orders",
+        "name": "investment_orders_fee_check",
+        "definition": "CHECK ((fee >= (0)::numeric))",
+        "validated": true
+      },
+      {
+        "relation": "investment_orders",
+        "name": "investment_orders_journalEntryId_fkey",
+        "definition": "FOREIGN KEY (\"journalEntryId\") REFERENCES invento.journal_entries(id)",
+        "validated": true
+      },
+      {
+        "relation": "investment_orders",
+        "name": "investment_orders_journalEntryId_key",
+        "definition": "UNIQUE (\"journalEntryId\")",
+        "validated": true
+      },
+      {
+        "relation": "investment_orders",
+        "name": "investment_orders_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "relation": "investment_orders",
+        "name": "investment_orders_price_check",
+        "definition": "CHECK ((price > (0)::numeric))",
+        "validated": true
+      },
+      {
+        "relation": "investment_orders",
+        "name": "investment_orders_productId_fkey",
+        "definition": "FOREIGN KEY (\"productId\") REFERENCES invento.investment_products(id)",
+        "validated": true
+      },
+      {
+        "relation": "investment_orders",
+        "name": "investment_orders_side_check",
+        "definition": "CHECK ((side = ANY (ARRAY['buy'::text, 'sell'::text])))",
+        "validated": true
+      },
+      {
+        "relation": "investment_orders",
+        "name": "investment_orders_status_check",
+        "definition": "CHECK ((status = ANY (ARRAY['filled'::text, 'pending'::text, 'cancelled'::text])))",
+        "validated": true
+      },
+      {
+        "relation": "investment_orders",
+        "name": "investment_orders_units_check",
+        "definition": "CHECK ((units > (0)::numeric))",
+        "validated": true
+      },
+      {
+        "relation": "investment_orders",
+        "name": "investment_orders_userId_fkey",
+        "definition": "FOREIGN KEY (\"userId\") REFERENCES invento.users(id)",
+        "validated": true
+      },
+      {
+        "relation": "investment_products",
+        "name": "investment_products_assetClass_check",
+        "definition": "CHECK ((\"assetClass\" = ANY (ARRAY['treasury'::text, 'equity'::text, 'etf'::text, 'crypto'::text, 'fixed-deposit'::text])))",
+        "validated": true
+      },
+      {
+        "relation": "investment_products",
+        "name": "investment_products_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "relation": "investment_products",
+        "name": "investment_products_previousClose_check",
+        "definition": "CHECK ((\"previousClose\" > (0)::numeric))",
+        "validated": true
+      },
+      {
+        "relation": "investment_products",
+        "name": "investment_products_price_check",
+        "definition": "CHECK ((price > (0)::numeric))",
+        "validated": true
+      },
+      {
+        "relation": "investment_products",
+        "name": "investment_products_risk_check",
+        "definition": "CHECK ((risk = ANY (ARRAY['low'::text, 'medium'::text, 'high'::text])))",
+        "validated": true
+      },
+      {
+        "relation": "investment_products",
+        "name": "investment_products_ticker_key",
+        "definition": "UNIQUE (ticker)",
+        "validated": true
+      },
+      {
+        "relation": "journal_entries",
+        "name": "journal_balanced",
+        "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+        "validated": true
+      },
+      {
+        "relation": "journal_entries",
+        "name": "journal_entries_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "relation": "journal_entries",
+        "name": "journal_entries_reference_key",
+        "definition": "UNIQUE (reference)",
+        "validated": true
+      },
+      {
+        "relation": "ledger_accounts",
+        "name": "ledger_accounts_accountId_fkey",
+        "definition": "FOREIGN KEY (\"accountId\") REFERENCES invento.accounts(id)",
+        "validated": true
+      },
+      {
+        "relation": "ledger_accounts",
+        "name": "ledger_accounts_accountId_key",
+        "definition": "UNIQUE (\"accountId\")",
+        "validated": true
+      },
+      {
+        "relation": "ledger_accounts",
+        "name": "ledger_accounts_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "relation": "ledger_accounts",
+        "name": "ledger_accounts_purpose_check",
+        "definition": "CHECK ((purpose = ANY (ARRAY['customer'::text, 'settlement'::text, 'fee'::text, 'investment'::text, 'opening'::text])))",
+        "validated": true
+      },
+      {
+        "relation": "ledger_accounts",
+        "name": "ledger_accounts_purpose_currency_accountId_key",
+        "definition": "UNIQUE (purpose, currency, \"accountId\")",
+        "validated": true
+      },
+      {
+        "relation": "mfa_credentials",
+        "name": "mfa_credentials_pkey",
+        "definition": "PRIMARY KEY (\"userId\")",
+        "validated": true
+      },
+      {
+        "relation": "mfa_credentials",
+        "name": "mfa_credentials_userId_fkey",
+        "definition": "FOREIGN KEY (\"userId\") REFERENCES invento.users(id)",
+        "validated": true
+      },
+      {
+        "relation": "notifications",
+        "name": "notifications_kind_check",
+        "definition": "CHECK ((kind = ANY (ARRAY['transaction'::text, 'security'::text, 'investment'::text, 'system'::text, 'promo'::text])))",
+        "validated": true
+      },
+      {
+        "relation": "notifications",
+        "name": "notifications_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "relation": "notifications",
+        "name": "notifications_targetType_check",
+        "definition": "CHECK ((\"targetType\" = ANY (ARRAY['transaction'::text, 'investment'::text, 'security'::text, 'system'::text])))",
+        "validated": true
+      },
+      {
+        "relation": "notifications",
+        "name": "notifications_userId_fkey",
+        "definition": "FOREIGN KEY (\"userId\") REFERENCES invento.users(id)",
+        "validated": true
+      },
+      {
+        "relation": "password_reset_tokens",
+        "name": "password_reset_tokens_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "relation": "password_reset_tokens",
+        "name": "password_reset_tokens_tokenHash_key",
+        "definition": "UNIQUE (\"tokenHash\")",
+        "validated": true
+      },
+      {
+        "relation": "password_reset_tokens",
+        "name": "password_reset_tokens_userId_fkey",
+        "definition": "FOREIGN KEY (\"userId\") REFERENCES invento.users(id)",
+        "validated": true
+      },
+      {
+        "relation": "paystack_card_links",
+        "name": "paystack_card_links_cardId_fkey",
+        "definition": "FOREIGN KEY (\"cardId\") REFERENCES invento.cards(id) ON DELETE SET NULL",
+        "validated": true
+      },
+      {
+        "relation": "paystack_card_links",
+        "name": "paystack_card_links_pkey",
+        "definition": "PRIMARY KEY (reference)",
+        "validated": true
+      },
+      {
+        "relation": "paystack_card_links",
+        "name": "paystack_card_links_userId_fkey",
+        "definition": "FOREIGN KEY (\"userId\") REFERENCES invento.users(id) ON DELETE CASCADE",
+        "validated": true
+      },
+      {
+        "relation": "postings",
+        "name": "customer_balance_nonnegative",
+        "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+        "validated": true
+      },
+      {
+        "relation": "postings",
+        "name": "postings_amountMinor_check",
+        "definition": "CHECK ((\"amountMinor\" > 0))",
+        "validated": true
+      },
+      {
+        "relation": "postings",
+        "name": "postings_balanced",
+        "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+        "validated": true
+      },
+      {
+        "relation": "postings",
+        "name": "postings_journalEntryId_fkey",
+        "definition": "FOREIGN KEY (\"journalEntryId\") REFERENCES invento.journal_entries(id)",
+        "validated": true
+      },
+      {
+        "relation": "postings",
+        "name": "postings_ledgerAccountId_fkey",
+        "definition": "FOREIGN KEY (\"ledgerAccountId\") REFERENCES invento.ledger_accounts(id)",
+        "validated": true
+      },
+      {
+        "relation": "postings",
+        "name": "postings_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "relation": "postings",
+        "name": "postings_side_check",
+        "definition": "CHECK ((side = ANY (ARRAY['debit'::text, 'credit'::text])))",
+        "validated": true
+      },
+      {
+        "relation": "preferences",
+        "name": "preferences_currency_check",
+        "definition": "CHECK ((currency ~ '^[A-Z]{3}$'::text))",
+        "validated": true
+      },
+      {
+        "relation": "preferences",
+        "name": "preferences_pkey",
+        "definition": "PRIMARY KEY (\"userId\")",
+        "validated": true
+      },
+      {
+        "relation": "preferences",
+        "name": "preferences_userId_fkey",
+        "definition": "FOREIGN KEY (\"userId\") REFERENCES invento.users(id)",
+        "validated": true
+      },
+      {
+        "relation": "price_history",
+        "name": "price_history_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "relation": "price_history",
+        "name": "price_history_price_check",
+        "definition": "CHECK ((price > (0)::numeric))",
+        "validated": true
+      },
+      {
+        "relation": "price_history",
+        "name": "price_history_productId_fkey",
+        "definition": "FOREIGN KEY (\"productId\") REFERENCES invento.investment_products(id)",
+        "validated": true
+      },
+      {
+        "relation": "push_tokens",
+        "name": "push_tokens_deviceId_fkey",
+        "definition": "FOREIGN KEY (\"deviceId\") REFERENCES invento.devices(id)",
+        "validated": true
+      },
+      {
+        "relation": "push_tokens",
+        "name": "push_tokens_deviceId_provider_key",
+        "definition": "UNIQUE (\"deviceId\", provider)",
+        "validated": true
+      },
+      {
+        "relation": "push_tokens",
+        "name": "push_tokens_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "relation": "push_tokens",
+        "name": "push_tokens_provider_check",
+        "definition": "CHECK ((provider = ANY (ARRAY['expo'::text, 'fcm'::text, 'apns'::text])))",
+        "validated": true
+      },
+      {
+        "relation": "push_tokens",
+        "name": "push_tokens_token_key",
+        "definition": "UNIQUE (token)",
+        "validated": true
+      },
+      {
+        "relation": "push_tokens",
+        "name": "push_tokens_userId_fkey",
+        "definition": "FOREIGN KEY (\"userId\") REFERENCES invento.users(id)",
+        "validated": true
+      },
+      {
+        "relation": "refresh_tokens",
+        "name": "refresh_tokens_deviceId_userId_fkey",
+        "definition": "FOREIGN KEY (\"deviceId\", \"userId\") REFERENCES invento.devices(id, \"userId\")",
+        "validated": true
+      },
+      {
+        "relation": "refresh_tokens",
+        "name": "refresh_tokens_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "relation": "refresh_tokens",
+        "name": "refresh_tokens_tokenHash_key",
+        "definition": "UNIQUE (\"tokenHash\")",
+        "validated": true
+      },
+      {
+        "relation": "refresh_tokens",
+        "name": "refresh_tokens_userId_fkey",
+        "definition": "FOREIGN KEY (\"userId\") REFERENCES invento.users(id)",
+        "validated": true
+      },
+      {
+        "relation": "security_settings",
+        "name": "security_settings_autoLock_check",
+        "definition": "CHECK ((\"autoLock\" > 0))",
+        "validated": true
+      },
+      {
+        "relation": "security_settings",
+        "name": "security_settings_pkey",
+        "definition": "PRIMARY KEY (\"userId\")",
+        "validated": true
+      },
+      {
+        "relation": "security_settings",
+        "name": "security_settings_userId_fkey",
+        "definition": "FOREIGN KEY (\"userId\") REFERENCES invento.users(id)",
+        "validated": true
+      },
+      {
+        "relation": "step_up_tokens",
+        "name": "step_up_tokens_action_check",
+        "definition": "CHECK ((action = ANY (ARRAY['transfer'::text, 'investment_order'::text, 'beneficiary_add'::text, 'pin_change'::text, 'password_change'::text, 'security_downgrade'::text, 'biometric_enroll'::text, 'two_factor_setup'::text])))",
+        "validated": true
+      },
+      {
+        "relation": "step_up_tokens",
+        "name": "step_up_tokens_deviceId_userId_fkey",
+        "definition": "FOREIGN KEY (\"deviceId\", \"userId\") REFERENCES invento.devices(id, \"userId\")",
+        "validated": true
+      },
+      {
+        "relation": "step_up_tokens",
+        "name": "step_up_tokens_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "relation": "step_up_tokens",
+        "name": "step_up_tokens_tokenHash_key",
+        "definition": "UNIQUE (\"tokenHash\")",
+        "validated": true
+      },
+      {
+        "relation": "step_up_tokens",
+        "name": "step_up_tokens_userId_fkey",
+        "definition": "FOREIGN KEY (\"userId\") REFERENCES invento.users(id)",
+        "validated": true
+      },
+      {
+        "relation": "transactions",
+        "name": "transactions_accountId_userId_fkey",
+        "definition": "FOREIGN KEY (\"accountId\", \"userId\") REFERENCES invento.accounts(id, \"userId\")",
+        "validated": true
+      },
+      {
+        "relation": "transactions",
+        "name": "transactions_amount_check",
+        "definition": "CHECK ((amount > (0)::numeric))",
+        "validated": true
+      },
+      {
+        "relation": "transactions",
+        "name": "transactions_fee_check",
+        "definition": "CHECK ((fee >= (0)::numeric))",
+        "validated": true
+      },
+      {
+        "relation": "transactions",
+        "name": "transactions_id_userId_key",
+        "definition": "UNIQUE (id, \"userId\")",
+        "validated": true
+      },
+      {
+        "relation": "transactions",
+        "name": "transactions_journalEntryId_fkey",
+        "definition": "FOREIGN KEY (\"journalEntryId\") REFERENCES invento.journal_entries(id)",
+        "validated": true
+      },
+      {
+        "relation": "transactions",
+        "name": "transactions_journalEntryId_key",
+        "definition": "UNIQUE (\"journalEntryId\")",
+        "validated": true
+      },
+      {
+        "relation": "transactions",
+        "name": "transactions_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "relation": "transactions",
+        "name": "transactions_reference_key",
+        "definition": "UNIQUE (reference)",
+        "validated": true
+      },
+      {
+        "relation": "transactions",
+        "name": "transactions_status_check",
+        "definition": "CHECK ((status = ANY (ARRAY['completed'::text, 'pending'::text, 'failed'::text, 'reversed'::text])))",
+        "validated": true
+      },
+      {
+        "relation": "transactions",
+        "name": "transactions_userId_fkey",
+        "definition": "FOREIGN KEY (\"userId\") REFERENCES invento.users(id)",
+        "validated": true
+      },
+      {
+        "relation": "transfers",
+        "name": "transfers_beneficiaryId_fkey",
+        "definition": "FOREIGN KEY (\"beneficiaryId\") REFERENCES invento.beneficiaries(id)",
+        "validated": true
+      },
+      {
+        "relation": "transfers",
+        "name": "transfers_beneficiaryId_userId_fkey",
+        "definition": "FOREIGN KEY (\"beneficiaryId\", \"userId\") REFERENCES invento.beneficiaries(id, \"userId\")",
+        "validated": true
+      },
+      {
+        "relation": "transfers",
+        "name": "transfers_fromAccountId_userId_fkey",
+        "definition": "FOREIGN KEY (\"fromAccountId\", \"userId\") REFERENCES invento.accounts(id, \"userId\")",
+        "validated": true
+      },
+      {
+        "relation": "transfers",
+        "name": "transfers_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "relation": "transfers",
+        "name": "transfers_reference_key",
+        "definition": "UNIQUE (reference)",
+        "validated": true
+      },
+      {
+        "relation": "transfers",
+        "name": "transfers_transactionId_fkey",
+        "definition": "FOREIGN KEY (\"transactionId\") REFERENCES invento.transactions(id)",
+        "validated": true
+      },
+      {
+        "relation": "transfers",
+        "name": "transfers_transactionId_key",
+        "definition": "UNIQUE (\"transactionId\")",
+        "validated": true
+      },
+      {
+        "relation": "transfers",
+        "name": "transfers_userId_fkey",
+        "definition": "FOREIGN KEY (\"userId\") REFERENCES invento.users(id)",
+        "validated": true
+      },
+      {
+        "relation": "users",
+        "name": "users_email_check",
+        "definition": "CHECK ((email = lower(email)))",
+        "validated": true
+      },
+      {
+        "relation": "users",
+        "name": "users_email_key",
+        "definition": "UNIQUE (email)",
+        "validated": true
+      },
+      {
+        "relation": "users",
+        "name": "users_pkey",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "relation": "users",
+        "name": "users_tier_check",
+        "definition": "CHECK ((tier = ANY (ARRAY['standard'::text, 'premium'::text])))",
+        "validated": true
+      },
+      {
+        "relation": "watchlists",
+        "name": "watchlists_pkey",
+        "definition": "PRIMARY KEY (\"userId\", \"productId\")",
+        "validated": true
+      },
+      {
+        "relation": "watchlists",
+        "name": "watchlists_productId_fkey",
+        "definition": "FOREIGN KEY (\"productId\") REFERENCES invento.investment_products(id)",
+        "validated": true
+      },
+      {
+        "relation": "watchlists",
+        "name": "watchlists_userId_fkey",
+        "definition": "FOREIGN KEY (\"userId\") REFERENCES invento.users(id)",
+        "validated": true
+      }
+    ],
+    "indexes": [
+      {
+        "relation": "accounts",
+        "name": "accounts_id_userId_key",
+        "definition": "CREATE UNIQUE INDEX \"accounts_id_userId_key\" ON invento.accounts USING btree (id, \"userId\")",
+        "valid": true
+      },
+      {
+        "relation": "accounts",
+        "name": "accounts_pkey",
+        "definition": "CREATE UNIQUE INDEX accounts_pkey ON invento.accounts USING btree (id)",
+        "valid": true
+      },
+      {
+        "relation": "accounts",
+        "name": "accounts_user",
+        "definition": "CREATE INDEX accounts_user ON invento.accounts USING btree (\"userId\")",
+        "valid": true
+      },
+      {
+        "relation": "auth_challenges",
+        "name": "auth_challenges_pkey",
+        "definition": "CREATE UNIQUE INDEX auth_challenges_pkey ON invento.auth_challenges USING btree (id)",
+        "valid": true
+      },
+      {
+        "relation": "auth_challenges",
+        "name": "auth_challenges_tokenHash_key",
+        "definition": "CREATE UNIQUE INDEX \"auth_challenges_tokenHash_key\" ON invento.auth_challenges USING btree (\"tokenHash\")",
+        "valid": true
+      },
+      {
+        "relation": "auth_challenges",
+        "name": "auth_challenges_user",
+        "definition": "CREATE INDEX auth_challenges_user ON invento.auth_challenges USING btree (\"userId\")",
+        "valid": true
+      },
+      {
+        "relation": "beneficiaries",
+        "name": "beneficiaries_id_userId_key",
+        "definition": "CREATE UNIQUE INDEX \"beneficiaries_id_userId_key\" ON invento.beneficiaries USING btree (id, \"userId\")",
+        "valid": true
+      },
+      {
+        "relation": "beneficiaries",
+        "name": "beneficiaries_pkey",
+        "definition": "CREATE UNIQUE INDEX beneficiaries_pkey ON invento.beneficiaries USING btree (id)",
+        "valid": true
+      },
+      {
+        "relation": "beneficiaries",
+        "name": "beneficiaries_user",
+        "definition": "CREATE INDEX beneficiaries_user ON invento.beneficiaries USING btree (\"userId\")",
+        "valid": true
+      },
+      {
+        "relation": "biometric_credentials",
+        "name": "biometric_credentials_pkey",
+        "definition": "CREATE UNIQUE INDEX biometric_credentials_pkey ON invento.biometric_credentials USING btree (id)",
+        "valid": true
+      },
+      {
+        "relation": "biometric_credentials",
+        "name": "biometric_credentials_user",
+        "definition": "CREATE INDEX biometric_credentials_user ON invento.biometric_credentials USING btree (\"userId\")",
+        "valid": true
+      },
+      {
+        "relation": "cards",
+        "name": "cards_pkey",
+        "definition": "CREATE UNIQUE INDEX cards_pkey ON invento.cards USING btree (id)",
+        "valid": true
+      },
+      {
+        "relation": "cards",
+        "name": "cards_user",
+        "definition": "CREATE INDEX cards_user ON invento.cards USING btree (\"userId\")",
+        "valid": true
+      },
+      {
+        "relation": "cards",
+        "name": "one_default_card",
+        "definition": "CREATE UNIQUE INDEX one_default_card ON invento.cards USING btree (\"userId\") WHERE \"isDefault\"",
+        "valid": true
+      },
+      {
+        "relation": "devices",
+        "name": "devices_id_userId_key",
+        "definition": "CREATE UNIQUE INDEX \"devices_id_userId_key\" ON invento.devices USING btree (id, \"userId\")",
+        "valid": true
+      },
+      {
+        "relation": "devices",
+        "name": "devices_pkey",
+        "definition": "CREATE UNIQUE INDEX devices_pkey ON invento.devices USING btree (id)",
+        "valid": true
+      },
+      {
+        "relation": "devices",
+        "name": "devices_user",
+        "definition": "CREATE INDEX devices_user ON invento.devices USING btree (\"userId\")",
+        "valid": true
+      },
+      {
+        "relation": "disputes",
+        "name": "disputes_pkey",
+        "definition": "CREATE UNIQUE INDEX disputes_pkey ON invento.disputes USING btree (id)",
+        "valid": true
+      },
+      {
+        "relation": "disputes",
+        "name": "disputes_userId_transactionId_key",
+        "definition": "CREATE UNIQUE INDEX \"disputes_userId_transactionId_key\" ON invento.disputes USING btree (\"userId\", \"transactionId\")",
+        "valid": true
+      },
+      {
+        "relation": "email_verification_tokens",
+        "name": "email_verification_tokens_pkey",
+        "definition": "CREATE UNIQUE INDEX email_verification_tokens_pkey ON invento.email_verification_tokens USING btree (id)",
+        "valid": true
+      },
+      {
+        "relation": "email_verification_tokens",
+        "name": "email_verification_tokens_tokenHash_key",
+        "definition": "CREATE UNIQUE INDEX \"email_verification_tokens_tokenHash_key\" ON invento.email_verification_tokens USING btree (\"tokenHash\")",
+        "valid": true
+      },
+      {
+        "relation": "fx_rates",
+        "name": "fx_rates_pkey",
+        "definition": "CREATE UNIQUE INDEX fx_rates_pkey ON invento.fx_rates USING btree (currency)",
+        "valid": true
+      },
+      {
+        "relation": "holdings",
+        "name": "holdings_pkey",
+        "definition": "CREATE UNIQUE INDEX holdings_pkey ON invento.holdings USING btree (id)",
+        "valid": true
+      },
+      {
+        "relation": "holdings",
+        "name": "holdings_user",
+        "definition": "CREATE INDEX holdings_user ON invento.holdings USING btree (\"userId\")",
+        "valid": true
+      },
+      {
+        "relation": "holdings",
+        "name": "holdings_userId_productId_key",
+        "definition": "CREATE UNIQUE INDEX \"holdings_userId_productId_key\" ON invento.holdings USING btree (\"userId\", \"productId\")",
+        "valid": true
+      },
+      {
+        "relation": "idempotency_keys",
+        "name": "idempotency_keys_pkey",
+        "definition": "CREATE UNIQUE INDEX idempotency_keys_pkey ON invento.idempotency_keys USING btree (\"userId\", key)",
+        "valid": true
+      },
+      {
+        "relation": "investment_orders",
+        "name": "investment_orders_journalEntryId_key",
+        "definition": "CREATE UNIQUE INDEX \"investment_orders_journalEntryId_key\" ON invento.investment_orders USING btree (\"journalEntryId\")",
+        "valid": true
+      },
+      {
+        "relation": "investment_orders",
+        "name": "investment_orders_pkey",
+        "definition": "CREATE UNIQUE INDEX investment_orders_pkey ON invento.investment_orders USING btree (id)",
+        "valid": true
+      },
+      {
+        "relation": "investment_orders",
+        "name": "investment_orders_user",
+        "definition": "CREATE INDEX investment_orders_user ON invento.investment_orders USING btree (\"userId\")",
+        "valid": true
+      },
+      {
+        "relation": "investment_products",
+        "name": "investment_products_pkey",
+        "definition": "CREATE UNIQUE INDEX investment_products_pkey ON invento.investment_products USING btree (id)",
+        "valid": true
+      },
+      {
+        "relation": "investment_products",
+        "name": "investment_products_ticker_key",
+        "definition": "CREATE UNIQUE INDEX investment_products_ticker_key ON invento.investment_products USING btree (ticker)",
+        "valid": true
+      },
+      {
+        "relation": "journal_entries",
+        "name": "journal_entries_pkey",
+        "definition": "CREATE UNIQUE INDEX journal_entries_pkey ON invento.journal_entries USING btree (id)",
+        "valid": true
+      },
+      {
+        "relation": "journal_entries",
+        "name": "journal_entries_reference_key",
+        "definition": "CREATE UNIQUE INDEX journal_entries_reference_key ON invento.journal_entries USING btree (reference)",
+        "valid": true
+      },
+      {
+        "relation": "ledger_accounts",
+        "name": "ledger_accounts_accountId_key",
+        "definition": "CREATE UNIQUE INDEX \"ledger_accounts_accountId_key\" ON invento.ledger_accounts USING btree (\"accountId\")",
+        "valid": true
+      },
+      {
+        "relation": "ledger_accounts",
+        "name": "ledger_accounts_pkey",
+        "definition": "CREATE UNIQUE INDEX ledger_accounts_pkey ON invento.ledger_accounts USING btree (id)",
+        "valid": true
+      },
+      {
+        "relation": "ledger_accounts",
+        "name": "ledger_accounts_purpose_currency_accountId_key",
+        "definition": "CREATE UNIQUE INDEX \"ledger_accounts_purpose_currency_accountId_key\" ON invento.ledger_accounts USING btree (purpose, currency, \"accountId\")",
+        "valid": true
+      },
+      {
+        "relation": "ledger_accounts",
+        "name": "ledger_system_currency",
+        "definition": "CREATE UNIQUE INDEX ledger_system_currency ON invento.ledger_accounts USING btree (purpose, currency) WHERE (\"accountId\" IS NULL)",
+        "valid": true
+      },
+      {
+        "relation": "mfa_credentials",
+        "name": "mfa_credentials_pkey",
+        "definition": "CREATE UNIQUE INDEX mfa_credentials_pkey ON invento.mfa_credentials USING btree (\"userId\")",
+        "valid": true
+      },
+      {
+        "relation": "notifications",
+        "name": "notifications_pkey",
+        "definition": "CREATE UNIQUE INDEX notifications_pkey ON invento.notifications USING btree (id)",
+        "valid": true
+      },
+      {
+        "relation": "notifications",
+        "name": "notifications_user",
+        "definition": "CREATE INDEX notifications_user ON invento.notifications USING btree (\"userId\")",
+        "valid": true
+      },
+      {
+        "relation": "password_reset_tokens",
+        "name": "password_reset_tokens_pkey",
+        "definition": "CREATE UNIQUE INDEX password_reset_tokens_pkey ON invento.password_reset_tokens USING btree (id)",
+        "valid": true
+      },
+      {
+        "relation": "password_reset_tokens",
+        "name": "password_reset_tokens_tokenHash_key",
+        "definition": "CREATE UNIQUE INDEX \"password_reset_tokens_tokenHash_key\" ON invento.password_reset_tokens USING btree (\"tokenHash\")",
+        "valid": true
+      },
+      {
+        "relation": "password_reset_tokens",
+        "name": "password_reset_tokens_user",
+        "definition": "CREATE INDEX password_reset_tokens_user ON invento.password_reset_tokens USING btree (\"userId\")",
+        "valid": true
+      },
+      {
+        "relation": "paystack_card_links",
+        "name": "paystack_card_links_pkey",
+        "definition": "CREATE UNIQUE INDEX paystack_card_links_pkey ON invento.paystack_card_links USING btree (reference)",
+        "valid": true
+      },
+      {
+        "relation": "paystack_card_links",
+        "name": "paystack_card_links_userId_idx",
+        "definition": "CREATE INDEX \"paystack_card_links_userId_idx\" ON invento.paystack_card_links USING btree (\"userId\")",
+        "valid": true
+      },
+      {
+        "relation": "postings",
+        "name": "postings_account",
+        "definition": "CREATE INDEX postings_account ON invento.postings USING btree (\"ledgerAccountId\")",
+        "valid": true
+      },
+      {
+        "relation": "postings",
+        "name": "postings_journal",
+        "definition": "CREATE INDEX postings_journal ON invento.postings USING btree (\"journalEntryId\")",
+        "valid": true
+      },
+      {
+        "relation": "postings",
+        "name": "postings_pkey",
+        "definition": "CREATE UNIQUE INDEX postings_pkey ON invento.postings USING btree (id)",
+        "valid": true
+      },
+      {
+        "relation": "preferences",
+        "name": "preferences_pkey",
+        "definition": "CREATE UNIQUE INDEX preferences_pkey ON invento.preferences USING btree (\"userId\")",
+        "valid": true
+      },
+      {
+        "relation": "price_history",
+        "name": "price_history_pkey",
+        "definition": "CREATE UNIQUE INDEX price_history_pkey ON invento.price_history USING btree (id)",
+        "valid": true
+      },
+      {
+        "relation": "push_tokens",
+        "name": "push_tokens_deviceId_provider_key",
+        "definition": "CREATE UNIQUE INDEX \"push_tokens_deviceId_provider_key\" ON invento.push_tokens USING btree (\"deviceId\", provider)",
+        "valid": true
+      },
+      {
+        "relation": "push_tokens",
+        "name": "push_tokens_pkey",
+        "definition": "CREATE UNIQUE INDEX push_tokens_pkey ON invento.push_tokens USING btree (id)",
+        "valid": true
+      },
+      {
+        "relation": "push_tokens",
+        "name": "push_tokens_token_key",
+        "definition": "CREATE UNIQUE INDEX push_tokens_token_key ON invento.push_tokens USING btree (token)",
+        "valid": true
+      },
+      {
+        "relation": "refresh_tokens",
+        "name": "refresh_tokens_pkey",
+        "definition": "CREATE UNIQUE INDEX refresh_tokens_pkey ON invento.refresh_tokens USING btree (id)",
+        "valid": true
+      },
+      {
+        "relation": "refresh_tokens",
+        "name": "refresh_tokens_tokenHash_key",
+        "definition": "CREATE UNIQUE INDEX \"refresh_tokens_tokenHash_key\" ON invento.refresh_tokens USING btree (\"tokenHash\")",
+        "valid": true
+      },
+      {
+        "relation": "refresh_tokens",
+        "name": "refresh_tokens_user",
+        "definition": "CREATE INDEX refresh_tokens_user ON invento.refresh_tokens USING btree (\"userId\")",
+        "valid": true
+      },
+      {
+        "relation": "security_settings",
+        "name": "security_settings_pkey",
+        "definition": "CREATE UNIQUE INDEX security_settings_pkey ON invento.security_settings USING btree (\"userId\")",
+        "valid": true
+      },
+      {
+        "relation": "step_up_tokens",
+        "name": "step_up_tokens_pkey",
+        "definition": "CREATE UNIQUE INDEX step_up_tokens_pkey ON invento.step_up_tokens USING btree (id)",
+        "valid": true
+      },
+      {
+        "relation": "step_up_tokens",
+        "name": "step_up_tokens_tokenHash_key",
+        "definition": "CREATE UNIQUE INDEX \"step_up_tokens_tokenHash_key\" ON invento.step_up_tokens USING btree (\"tokenHash\")",
+        "valid": true
+      },
+      {
+        "relation": "step_up_tokens",
+        "name": "step_up_tokens_user",
+        "definition": "CREATE INDEX step_up_tokens_user ON invento.step_up_tokens USING btree (\"userId\")",
+        "valid": true
+      },
+      {
+        "relation": "transactions",
+        "name": "transaction_history",
+        "definition": "CREATE INDEX transaction_history ON invento.transactions USING btree (\"userId\", \"createdAt\" DESC, id DESC)",
+        "valid": true
+      },
+      {
+        "relation": "transactions",
+        "name": "transactions_id_userId_key",
+        "definition": "CREATE UNIQUE INDEX \"transactions_id_userId_key\" ON invento.transactions USING btree (id, \"userId\")",
+        "valid": true
+      },
+      {
+        "relation": "transactions",
+        "name": "transactions_journalEntryId_key",
+        "definition": "CREATE UNIQUE INDEX \"transactions_journalEntryId_key\" ON invento.transactions USING btree (\"journalEntryId\")",
+        "valid": true
+      },
+      {
+        "relation": "transactions",
+        "name": "transactions_pkey",
+        "definition": "CREATE UNIQUE INDEX transactions_pkey ON invento.transactions USING btree (id)",
+        "valid": true
+      },
+      {
+        "relation": "transactions",
+        "name": "transactions_reference_key",
+        "definition": "CREATE UNIQUE INDEX transactions_reference_key ON invento.transactions USING btree (reference)",
+        "valid": true
+      },
+      {
+        "relation": "transfers",
+        "name": "transfers_pkey",
+        "definition": "CREATE UNIQUE INDEX transfers_pkey ON invento.transfers USING btree (id)",
+        "valid": true
+      },
+      {
+        "relation": "transfers",
+        "name": "transfers_reference_key",
+        "definition": "CREATE UNIQUE INDEX transfers_reference_key ON invento.transfers USING btree (reference)",
+        "valid": true
+      },
+      {
+        "relation": "transfers",
+        "name": "transfers_transactionId_key",
+        "definition": "CREATE UNIQUE INDEX \"transfers_transactionId_key\" ON invento.transfers USING btree (\"transactionId\")",
+        "valid": true
+      },
+      {
+        "relation": "users",
+        "name": "users_email_key",
+        "definition": "CREATE UNIQUE INDEX users_email_key ON invento.users USING btree (email)",
+        "valid": true
+      },
+      {
+        "relation": "users",
+        "name": "users_pkey",
+        "definition": "CREATE UNIQUE INDEX users_pkey ON invento.users USING btree (id)",
+        "valid": true
+      },
+      {
+        "relation": "watchlists",
+        "name": "watchlists_pkey",
+        "definition": "CREATE UNIQUE INDEX watchlists_pkey ON invento.watchlists USING btree (\"userId\", \"productId\")",
+        "valid": true
+      }
+    ],
+    "triggers": [
+      {
+        "relation": "accounts",
+        "name": "account_currency_immutable",
+        "definition": "CREATE TRIGGER account_currency_immutable BEFORE UPDATE OF currency ON invento.accounts FOR EACH ROW EXECUTE FUNCTION invento.immutable_account_currency()",
+        "enabled": "O"
+      },
+      {
+        "relation": "journal_entries",
+        "name": "journal_balanced",
+        "definition": "CREATE CONSTRAINT TRIGGER journal_balanced AFTER INSERT ON invento.journal_entries DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION invento.check_journal()",
+        "enabled": "O"
+      },
+      {
+        "relation": "journal_entries",
+        "name": "journal_immutable",
+        "definition": "CREATE TRIGGER journal_immutable BEFORE DELETE OR UPDATE OR TRUNCATE ON invento.journal_entries FOR EACH STATEMENT EXECUTE FUNCTION invento.immutable_ledger()",
+        "enabled": "O"
+      },
+      {
+        "relation": "ledger_accounts",
+        "name": "ledger_account_immutable",
+        "definition": "CREATE TRIGGER ledger_account_immutable BEFORE DELETE OR UPDATE OR TRUNCATE ON invento.ledger_accounts FOR EACH STATEMENT EXECUTE FUNCTION invento.immutable_ledger()",
+        "enabled": "O"
+      },
+      {
+        "relation": "postings",
+        "name": "customer_balance_nonnegative",
+        "definition": "CREATE CONSTRAINT TRIGGER customer_balance_nonnegative AFTER INSERT ON invento.postings DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION invento.nonnegative_customer_balance()",
+        "enabled": "O"
+      },
+      {
+        "relation": "postings",
+        "name": "lock_customer_posting",
+        "definition": "CREATE TRIGGER lock_customer_posting BEFORE INSERT ON invento.postings FOR EACH ROW EXECUTE FUNCTION invento.lock_customer_ledger()",
+        "enabled": "O"
+      },
+      {
+        "relation": "postings",
+        "name": "posting_same_transaction",
+        "definition": "CREATE TRIGGER posting_same_transaction BEFORE INSERT ON invento.postings FOR EACH ROW EXECUTE FUNCTION invento.prevent_late_posting()",
+        "enabled": "O"
+      },
+      {
+        "relation": "postings",
+        "name": "postings_balanced",
+        "definition": "CREATE CONSTRAINT TRIGGER postings_balanced AFTER INSERT ON invento.postings DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION invento.check_journal()",
+        "enabled": "O"
+      },
+      {
+        "relation": "postings",
+        "name": "postings_immutable",
+        "definition": "CREATE TRIGGER postings_immutable BEFORE DELETE OR UPDATE OR TRUNCATE ON invento.postings FOR EACH STATEMENT EXECUTE FUNCTION invento.immutable_ledger()",
+        "enabled": "O"
+      }
+    ],
+    "functions": [
+      {
+        "name": "check_journal",
+        "definition": "CREATE OR REPLACE FUNCTION invento.check_journal()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\nDECLARE jid uuid; cnt integer; currencies integer; net numeric;\nBEGIN\n IF TG_TABLE_NAME='journal_entries' THEN jid := NEW.id;\n ELSE jid := NEW.\"journalEntryId\"; END IF;\n SELECT count(*), count(DISTINCT a.currency), sum(CASE p.side WHEN 'credit' THEN p.\"amountMinor\" ELSE -p.\"amountMinor\" END)\n INTO cnt,currencies,net FROM invento.postings p JOIN invento.ledger_accounts a ON a.id=p.\"ledgerAccountId\" WHERE p.\"journalEntryId\"=jid;\n IF cnt<2 OR currencies<>1 OR net<>0 THEN RAISE EXCEPTION 'unbalanced_journal'; END IF;\n RETURN NEW;\nEND $function$\n"
+      },
+      {
+        "name": "immutable_account_currency",
+        "definition": "CREATE OR REPLACE FUNCTION invento.immutable_account_currency()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$ BEGIN\n IF NEW.currency IS DISTINCT FROM OLD.currency THEN RAISE EXCEPTION 'account_currency_is_immutable'; END IF;\n RETURN NEW;\nEND $function$\n"
+      },
+      {
+        "name": "immutable_ledger",
+        "definition": "CREATE OR REPLACE FUNCTION invento.immutable_ledger()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$ BEGIN RAISE EXCEPTION 'ledger_is_append_only'; END $function$\n"
+      },
+      {
+        "name": "lock_customer_ledger",
+        "definition": "CREATE OR REPLACE FUNCTION invento.lock_customer_ledger()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\nBEGIN\n PERFORM id FROM invento.ledger_accounts WHERE id=NEW.\"ledgerAccountId\" AND purpose='customer' FOR UPDATE;\n RETURN NEW;\nEND $function$\n"
+      },
+      {
+        "name": "nonnegative_customer_balance",
+        "definition": "CREATE OR REPLACE FUNCTION invento.nonnegative_customer_balance()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\nDECLARE balance numeric; customer boolean;\nBEGIN\n SELECT purpose='customer' INTO customer FROM invento.ledger_accounts WHERE id=NEW.\"ledgerAccountId\";\n IF customer THEN\n  SELECT sum(CASE side WHEN 'credit' THEN \"amountMinor\" ELSE -\"amountMinor\" END) INTO balance FROM invento.postings WHERE \"ledgerAccountId\"=NEW.\"ledgerAccountId\";\n  IF balance<0 THEN RAISE EXCEPTION 'negative_customer_balance'; END IF;\n END IF;\n RETURN NEW;\nEND $function$\n"
+      },
+      {
+        "name": "prevent_late_posting",
+        "definition": "CREATE OR REPLACE FUNCTION invento.prevent_late_posting()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$ BEGIN\n IF NOT EXISTS(SELECT 1 FROM invento.journal_entries WHERE id=NEW.\"journalEntryId\" AND xmin::text=pg_current_xact_id()::text) THEN RAISE EXCEPTION 'journal_already_finalized'; END IF;\n RETURN NEW; END $function$\n"
+      }
+    ],
+    "views": [
+      {
+        "name": "account_balances",
+        "definition": " SELECT a.id,\n    (COALESCE(sum(\n        CASE p.side\n            WHEN 'credit'::text THEN p.\"amountMinor\"\n            ELSE (- p.\"amountMinor\")\n        END), (0)::numeric))::bigint AS \"balanceMinor\"\n   FROM ((invento.accounts a\n     LEFT JOIN invento.ledger_accounts l ON ((l.\"accountId\" = a.id)))\n     LEFT JOIN invento.postings p ON ((p.\"ledgerAccountId\" = l.id)))\n  GROUP BY a.id;"
+      }
+    ],
+    "policies": []
+  }
+}

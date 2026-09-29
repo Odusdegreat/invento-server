@@ -1,0 +1,20 @@
+meta {
+  name: PATCH /notifications/{id}
+  type: http
+  seq: 53
+}
+
+patch {
+  url: {{baseUrl}}/notifications/{{notificationId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
+}

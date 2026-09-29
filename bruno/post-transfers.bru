@@ -1,7 +1,7 @@
 meta {
   name: POST /transfers
   type: http
-  seq: 15
+  seq: 17
 }
 
 post {
@@ -30,5 +30,7 @@ body:json {
 }
 
 script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
   if (res.body.id) { bru.setVar("transferId", res.body.id); bru.setVar("transactionId", res.body.transactionId); }
 }

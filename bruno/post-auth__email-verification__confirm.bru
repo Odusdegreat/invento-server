@@ -1,0 +1,22 @@
+meta {
+  name: POST /auth/email-verification/confirm
+  type: http
+  seq: 80
+}
+
+post {
+  url: {{baseUrl}}/auth/email-verification/confirm
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "token": "{{verificationToken}}"
+  }
+}
+
+script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
+}

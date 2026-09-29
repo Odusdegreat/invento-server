@@ -3,6 +3,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 if (!process.env.DATABASE_URL) throw new Error('DATABASE_URL is required');
 const sql = postgres(process.env.DATABASE_URL, { max: 1, prepare: false });
+let appliedCount = 0;
 try {
   await sql.begin(async (tx) => {
     await tx`select pg_advisory_xact_lock(718103241)`;
@@ -26,13 +27,18 @@ try {
           throw new Error('Applied migration changed: ' + name);
         continue;
       }
+      if (name === '001_foundation.sql') {
+        const [existing] = await tx`select to_regclass('invento.users') as name`;
+        if (existing.name) throw new Error('Existing invento schema has no foundation migration history. Run bun run db:baseline to verify it, then bun run db:baseline --apply to record verified history. No application tables were changed.');
+      }
       await tx.unsafe(
         source.replace(/^BEGIN;\s*/, '').replace(/COMMIT;\s*$/, ''),
       );
       await tx`insert into public.invento_migrations(name,checksum) values (${name},${checksum})`;
-      console.log('Applied ' + name);
+      appliedCount++;
     }
   });
+  console.log(appliedCount ? `Applied ${appliedCount} migrations successfully.` : 'Database is up to date; no pending migrations.');
 } finally {
   await sql.end();
 }

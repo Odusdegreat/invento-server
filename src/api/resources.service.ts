@@ -128,7 +128,7 @@ export class ResourcesService {
   }
   async transfer(s: Session, transferId: string) {
     const [row] = await this.db
-      .sql`select t.id,t."fromAccountId",t."beneficiaryId",t."transactionId",t.amount,t.fee,t.amount+t.fee as total,t.currency,t.note,t.reference,t.status,t."createdAt",x.counterparty from transfers t join transactions x on x.id=t."transactionId" where t.id=${transferId} and t."userId"=${s.userId}`;
+      .sql`select t.id,t."fromAccountId",t."beneficiaryId",t."recipientAccountId",t."transactionId",t.amount,t.fee,t.amount+t.fee as total,case when t.status='failed' then 0 else t.amount+t.fee end as "debitedAmount",true as simulated,t.currency,t.note,t.reference,t.status,t."createdAt",x.counterparty from transfers t join transactions x on x.id=t."transactionId" where t.id=${transferId} and t."userId"=${s.userId}`;
     if (!row) fail('not_found', 'Transfer not found', 404);
     return numericRows(row);
   }

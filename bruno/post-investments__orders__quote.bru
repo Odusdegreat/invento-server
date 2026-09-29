@@ -1,0 +1,31 @@
+meta {
+  name: POST /investments/orders/quote
+  type: http
+  seq: 38
+}
+
+post {
+  url: {{baseUrl}}/investments/orders/quote
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "productId": "{{productId}}",
+    "side": "buy",
+    "units": 1,
+    "price": 0,
+    "fee": 0,
+    "stepUpToken": "{{stepUpToken}}"
+  }
+}
+
+script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
+}

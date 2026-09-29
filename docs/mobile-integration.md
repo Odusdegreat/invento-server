@@ -50,4 +50,4 @@ Dashboard dates are UTC; cash flow includes fees. Portfolio gain combines realiz
 
 Both supplied password-reset path spellings and singular/plural dispute paths are supported. Swagger lists aliases. Theme remains device-local. Preferences do not convert funds.
 
-Consumer endpoints now support `/api/v1`; legacy routes remain aliases. See [endpoint completion](endpoint-completion.md) for date filters, summaries, order quotes, card edits, and the new email/PIN/MFA/WebAuthn flows.
+Consumer endpoints use the original unprefixed paths. See [endpoint completion](endpoint-completion.md) for date filters, summaries, order quotes, card edits, and the new email/PIN/MFA/WebAuthn flows.

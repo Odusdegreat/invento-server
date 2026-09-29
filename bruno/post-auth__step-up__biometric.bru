@@ -1,15 +1,27 @@
 meta {
   name: POST /auth/step-up/biometric
   type: http
-  seq: 61
+  seq: 89
 }
 
 post {
   url: {{baseUrl}}/auth/step-up/biometric
-  body: none
+  body: json
   auth: bearer
 }
 
 auth:bearer {
   token: {{accessToken}}
+}
+
+body:json {
+  {
+    "challengeToken": "{{challengeToken}}",
+    "response": {}
+  }
+}
+
+script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
 }

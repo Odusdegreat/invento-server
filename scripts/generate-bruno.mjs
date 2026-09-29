@@ -1,7 +1,18 @@
-import { mkdir, writeFile, readFile } from 'node:fs/promises';
+import { mkdir, writeFile, readFile, readdir, unlink } from 'node:fs/promises';
 const origin = process.env.API_BASE_URL;
-const doc = origin ? await (await fetch(origin + '/api/docs-json')).json() : JSON.parse(await readFile(new URL('../docs/openapi.json',import.meta.url),'utf8'));
+const doc = origin
+  ? await (await fetch(origin + '/api/docs-json')).json()
+  : JSON.parse(
+      await readFile(new URL('../docs/openapi.json', import.meta.url), 'utf8'),
+    );
 await mkdir('bruno/environments', { recursive: true });
+// Remove only generated versioned aliases; preserve custom requests and environments.
+for (const name of await readdir('bruno')) {
+  if (!/^(get|post|put|patch|delete)-api__v1(?:__.*)?\.bru$/.test(name)) continue;
+  const content = await readFile('bruno/' + name, 'utf8');
+  if (/name: (GET|POST|PUT|PATCH|DELETE) \/api\/v1(?:\/|\s)/.test(content))
+    await unlink('bruno/' + name);
+}
 await writeFile(
   'bruno/bruno.json',
   JSON.stringify(
@@ -42,11 +53,13 @@ await writeFile(
   credentialId:
   pushTokenId:
   orderId:
+  paystackReference:
   idempotencyKey: manual-intent-001
 }
 `,
 );
 const bodies = {
+  PaystackConfirmDto: { reference: '{{paystackReference}}' },
   LoginDto: {
     email: '{{email}}',
     password: '{{password}}',
@@ -110,40 +123,56 @@ const bodies = {
   SecurityDto: { transactionAlerts: true },
   PreferencesDto: { currency: 'USD' },
   DisputeDto: { reason: 'not_recognised' },
-  AccountPatchDto: {frozen:true},
-  CardPatchDto: {label:'Updated nickname',frozen:false},
-  PasswordProofDto: {password:'{{password}}',stepUpToken:'{{stepUpToken}}'},
-  TokenDto:{token:'{{verificationToken}}'},
-  OtpDto:{code:'{{otpCode}}'},
-  DisableMfaDto:{password:'{{password}}',code:'{{otpCode}}',stepUpToken:'{{stepUpToken}}'},
-  MfaLoginDto:{challengeToken:'{{challengeToken}}',code:'{{otpCode}}'},
-  StepDto:{stepUpToken:'{{stepUpToken}}'},
-  BiometricChallengeDto:{action:'{{action}}'},
-  RegistrationProofDto:{challengeToken:'{{challengeToken}}',response:{}},
-  AuthenticationProofDto:{challengeToken:'{{challengeToken}}',response:{}},
-  PushTokenDto:{provider:'expo',token:'replace-with-device-push-token'},
+  AccountPatchDto: { frozen: true },
+  CardPatchDto: { label: 'Updated nickname', frozen: false },
+  PasswordProofDto: {
+    password: '{{password}}',
+    stepUpToken: '{{stepUpToken}}',
+  },
+  TokenDto: { token: '{{verificationToken}}' },
+  OtpDto: { code: '{{otpCode}}' },
+  DisableMfaDto: {
+    password: '{{password}}',
+    code: '{{otpCode}}',
+    stepUpToken: '{{stepUpToken}}',
+  },
+  MfaLoginDto: { challengeToken: '{{challengeToken}}', code: '{{otpCode}}' },
+  StepDto: { stepUpToken: '{{stepUpToken}}' },
+  BiometricChallengeDto: { action: '{{action}}' },
+  RegistrationProofDto: { challengeToken: '{{challengeToken}}', response: {} },
+  AuthenticationProofDto: {
+    challengeToken: '{{challengeToken}}',
+    response: {},
+  },
+  PushTokenDto: { provider: 'expo', token: 'replace-with-device-push-token' },
 };
 let sequence = 0;
 for (const [documentPath, methods] of Object.entries(doc.paths)) {
-  const path=documentPath.replace(/^\/api\/v1/,'');
+  const path = documentPath;
   for (const [method, operation] of Object.entries(methods)) {
     if (!['get', 'post', 'put', 'patch', 'delete'].includes(method)) continue;
     sequence++;
-    const type = path.includes('biometric-credentials') ? 'credential' : path.includes('push-tokens') ? 'pushToken' : path.startsWith('/investments/orders') ? 'order' : path.startsWith('/accounts')
-      ? 'account'
-      : path.startsWith('/transactions')
-        ? 'transaction'
-        : path.startsWith('/transfers')
-          ? 'transfer'
-          : path.startsWith('/beneficiaries')
-            ? 'beneficiary'
-            : path.startsWith('/cards')
-              ? 'card'
-              : path.includes('watchlist') || path.includes('products')
-                ? 'product'
-                : path.startsWith('/notifications')
-                  ? 'notification'
-                  : 'device';
+    const type = path.includes('biometric-credentials')
+      ? 'credential'
+      : path.includes('push-tokens')
+        ? 'pushToken'
+        : path.startsWith('/investments/orders')
+          ? 'order'
+          : path.startsWith('/accounts')
+            ? 'account'
+            : path.startsWith('/transactions')
+              ? 'transaction'
+              : path.startsWith('/transfers')
+                ? 'transfer'
+                : path.startsWith('/beneficiaries')
+                  ? 'beneficiary'
+                  : path.startsWith('/cards')
+                    ? 'card'
+                    : path.includes('watchlist') || path.includes('products')
+                      ? 'product'
+                      : path.startsWith('/notifications')
+                        ? 'notification'
+                        : 'device';
     const route = documentPath.replace('{id}', '{{' + type + 'Id}}');
     const dto = operation.requestBody?.content?.[
       'application/json'
@@ -152,10 +181,22 @@ for (const [documentPath, methods] of Object.entries(doc.paths)) {
       .at(-1);
     let body = dto ? bodies[dto] : undefined;
     if (path === '/auth/pin/set')
-      body = { pin: '{{pin}}', confirmPin: '{{pin}}',setupToken:'{{setupToken}}' };
+      body = {
+        pin: '{{pin}}',
+        confirmPin: '{{pin}}',
+        setupToken: '{{setupToken}}',
+      };
     const isPublic =
+      path === '/webhooks/paystack' ||
       path === '/health' ||
-      ['/auth/register', '/auth/login', '/auth/refresh','/auth/2fa/login/verify','/auth/email-verification/request','/auth/email-verification/confirm'].includes(path) ||
+      [
+        '/auth/register',
+        '/auth/login',
+        '/auth/refresh',
+        '/auth/2fa/login/verify',
+        '/auth/email-verification/request',
+        '/auth/email-verification/confirm',
+      ].includes(path) ||
       path.includes('password-reset') ||
       path.includes('password/reset');
     let text = `meta {
@@ -185,10 +226,23 @@ ${method} {
           .join('\n') +
         '\n}\n';
     let script = '';
-    if (['/auth/login', '/auth/register', '/auth/refresh','/auth/2fa/login/verify'].includes(path))
+    if (path === '/cards/link/initialize')
+      script +=
+        'if (res.body.reference) bru.setVar("paystackReference", res.body.reference);\n';
+    if (path === '/cards/link/confirm')
+      script += 'if (res.body.cardId) bru.setVar("cardId", res.body.cardId);\n';
+    if (
+      [
+        '/auth/login',
+        '/auth/register',
+        '/auth/refresh',
+        '/auth/2fa/login/verify',
+      ].includes(path)
+    )
       script +=
         'if (res.body.accessToken) { bru.setVar("accessToken", res.body.accessToken); bru.setVar("refreshToken", res.body.refreshToken); }\n';
-    script+='if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);\nif (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);\n';
+    script +=
+      'if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);\nif (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);\n';
     if (['/auth/pin/verify', '/auth/step-up/verify'].includes(path))
       script +=
         'if (res.body.stepUpToken) bru.setVar("stepUpToken", res.body.stepUpToken);\n';
@@ -229,6 +283,6 @@ ${method} {
 }
 await writeFile(
   'bruno/README.md',
-  `Open this folder as a Bruno collection and select Local. Configure email/password, then login, list accounts/beneficiaries/products, and verify the PIN before a sensitive action. Set action to transfer, investment_order, beneficiary_add, pin_change, password_change, or security_downgrade as appropriate. Every confirmation is single-use. Keep Idempotency-Key unchanged for retries; change it for each new transfer or order. Session tokens stay in your local Bruno environment. Do not commit populated tokens. Reset tokens are delivered to .tmp/mail in development. Requests are an endpoint catalogue, not an ordered collection runner. ${sequence} requests generated from OpenAPI.\n`,
+  `Open this folder as a Bruno collection and select Local. Configure email/password, then login, list accounts/beneficiaries/products, and verify the PIN before a sensitive action. Set action to transfer, investment_order, beneficiary_add, pin_change, password_change, security_downgrade, biometric_enroll, or two_factor_setup as appropriate. Every confirmation is single-use. Keep Idempotency-Key unchanged for retries; change it for each new transfer or order. Session tokens use runtime variables. Do not commit populated tokens. Development without Resend uses .tmp/mail. See ../docs/endpoint-completion.md for PIN setup, 2FA and WebAuthn flows; WebAuthn response placeholders require a real compatible client. See ../docs/paystack.md for sandbox checkout and signed webhook setup; webhook requests require a valid signature and event body from Paystack. Requests are an endpoint catalogue, not an ordered collection runner. ${sequence} requests generated from OpenAPI.\n`,
 );
 console.log('Generated ' + sequence + ' Bruno requests');

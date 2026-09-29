@@ -14,7 +14,7 @@ import {
 } from '../api/dto.js';
 @ApiTags('auth')
 @ApiBearerAuth()
-@Controller(['api/v1/auth', 'auth'])
+@Controller('auth')
 export class AuthController {
   constructor(@Inject(AuthService) private auth: AuthService) {}
   @Public() @Post('register') register(@Body() dto: RegisterDto) {

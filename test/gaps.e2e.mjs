@@ -1,4 +1,4 @@
-﻿import 'reflect-metadata';
+import 'reflect-metadata';
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import {
@@ -51,7 +51,7 @@ const email = 'gaps-' + id() + '@example.test',
   password = 'Secure-gap-password',
   pin = '4826';
 const call = (method, path, body, token = user?.accessToken, key) => {
-  let r = http[method]('/api/v1' + path);
+  let r = http[method](path);
   if (token) r = r.set('Authorization', 'Bearer ' + token);
   if (key) r = r.set('Idempotency-Key', key);
   return body === undefined ? r : r.send(body);
@@ -86,7 +86,7 @@ after(async () => {
 });
 await test('missing endpoint contract and real security flows', async (t) => {
   await t.test(
-    'versioned registration, verification email, replay protection and first PIN proof',
+    'registration, verification email, replay protection and first PIN proof',
     async () => {
       user = check(
         await call('post', '/auth/register', {

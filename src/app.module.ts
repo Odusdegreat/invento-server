@@ -7,6 +7,7 @@ import { Public, SessionGuard } from './auth/session.guard.js';
 import { LedgerService } from './ledger/ledger.service.js';
 import { FinanceService } from './api/finance.service.js';
 import { ResourcesService } from './api/resources.service.js';
+import { DemoPaymentService } from './api/demo-payment.service.js';
 import { ApiController } from './api/api.controller.js';
 @Controller('health')
 class HealthController {
@@ -21,6 +22,7 @@ class HealthController {
     LedgerService,
     FinanceService,
     ResourcesService,
+    DemoPaymentService,
     { provide: APP_GUARD, useClass: SessionGuard },
   ],
 })

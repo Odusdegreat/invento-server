@@ -1,0 +1,20 @@
+meta {
+  name: GET /investments/portfolio
+  type: http
+  seq: 39
+}
+
+get {
+  url: {{baseUrl}}/investments/portfolio
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
+}

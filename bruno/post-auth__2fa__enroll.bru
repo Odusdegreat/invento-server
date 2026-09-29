@@ -1,0 +1,27 @@
+meta {
+  name: POST /auth/2fa/enroll
+  type: http
+  seq: 82
+}
+
+post {
+  url: {{baseUrl}}/auth/2fa/enroll
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "password": "{{password}}",
+    "stepUpToken": "{{stepUpToken}}"
+  }
+}
+
+script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
+}

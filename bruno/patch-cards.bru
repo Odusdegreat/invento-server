@@ -1,0 +1,26 @@
+meta {
+  name: PATCH /cards
+  type: http
+  seq: 25
+}
+
+patch {
+  url: {{baseUrl}}/cards
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "frozen": true
+  }
+}
+
+script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
+}

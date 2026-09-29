@@ -1,0 +1,28 @@
+meta {
+  name: POST /auth/2fa/disable
+  type: http
+  seq: 85
+}
+
+post {
+  url: {{baseUrl}}/auth/2fa/disable
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "password": "{{password}}",
+    "code": "{{otpCode}}",
+    "stepUpToken": "{{stepUpToken}}"
+  }
+}
+
+script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
+}

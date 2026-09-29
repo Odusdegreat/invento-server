@@ -1,7 +1,7 @@
 meta {
   name: POST /auth/pin/change
   type: http
-  seq: 59
+  seq: 77
 }
 
 post {
@@ -20,4 +20,9 @@ body:json {
     "confirmPin": "{{pin}}",
     "stepUpToken": "{{stepUpToken}}"
   }
+}
+
+script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
 }

@@ -1,7 +1,7 @@
 meta {
   name: PATCH /security
   type: http
-  seq: 42
+  seq: 56
 }
 
 patch {
@@ -18,4 +18,9 @@ body:json {
   {
     "transactionAlerts": true
   }
+}
+
+script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
 }

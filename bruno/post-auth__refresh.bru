@@ -1,7 +1,7 @@
 meta {
   name: POST /auth/refresh
   type: http
-  seq: 49
+  seq: 67
 }
 
 post {
@@ -17,5 +17,7 @@ body:json {
 }
 
 script:post-response {
-  if (res.body.accessToken) { bru.setEnvVar("accessToken", res.body.accessToken); bru.setEnvVar("refreshToken", res.body.refreshToken); }
+  if (res.body.accessToken) { bru.setVar("accessToken", res.body.accessToken); bru.setVar("refreshToken", res.body.refreshToken); }
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
 }

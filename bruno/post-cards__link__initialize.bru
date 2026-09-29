@@ -1,0 +1,21 @@
+meta {
+  name: POST /cards/link/initialize
+  type: http
+  seq: 62
+}
+
+post {
+  url: {{baseUrl}}/cards/link/initialize
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+script:post-response {
+  if (res.body.reference) bru.setVar("paystackReference", res.body.reference);
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
+}

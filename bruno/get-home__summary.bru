@@ -1,0 +1,20 @@
+meta {
+  name: GET /home/summary
+  type: http
+  seq: 45
+}
+
+get {
+  url: {{baseUrl}}/home/summary
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
+}

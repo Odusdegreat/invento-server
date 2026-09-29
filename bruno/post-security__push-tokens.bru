@@ -1,0 +1,27 @@
+meta {
+  name: POST /security/push-tokens
+  type: http
+  seq: 92
+}
+
+post {
+  url: {{baseUrl}}/security/push-tokens
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "provider": "expo",
+    "token": "replace-with-device-push-token"
+  }
+}
+
+script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
+}

@@ -1,7 +1,7 @@
 meta {
   name: POST /cards
   type: http
-  seq: 22
+  seq: 24
 }
 
 post {
@@ -21,4 +21,9 @@ body:json {
     "last4": "4242",
     "expiry": "12/29"
   }
+}
+
+script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
 }

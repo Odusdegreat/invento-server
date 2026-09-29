@@ -1,7 +1,7 @@
 meta {
   name: DELETE /investments/watchlist/{id}
   type: http
-  seq: 35
+  seq: 43
 }
 
 delete {
@@ -12,4 +12,9 @@ delete {
 
 auth:bearer {
   token: {{accessToken}}
+}
+
+script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
 }

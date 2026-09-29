@@ -1,7 +1,7 @@
 meta {
   name: POST /investments/orders
   type: http
-  seq: 32
+  seq: 36
 }
 
 post {
@@ -27,4 +27,9 @@ body:json {
     "fee": 0,
     "stepUpToken": "{{stepUpToken}}"
   }
+}
+
+script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
 }

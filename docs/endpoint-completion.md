@@ -1,6 +1,6 @@
 ﻿# Endpoint completion and integration changes
 
-All consumer routes in the supplied checklist now exist under `/api/v1`. Existing unprefixed routes and the earlier freeze/read/watchlist spellings remain aliases. `/health` and `/api/docs` remain unprefixed. The machine-readable contract is [openapi.json](openapi.json).
+Consumer routes use the original unprefixed paths. The earlier freeze/read/watchlist spellings remain supported. Health is at `/health` and Swagger is at `/api/docs`. The machine-readable contract is [openapi.json](openapi.json).
 
 ## Added resource behavior
 
@@ -58,6 +58,8 @@ WebAuthn proves authenticator user verification, which may use a device PIN or b
 `POST /security/push-tokens` registers `{ provider: "expo" | "fcm" | "apns", token }` for the current session. DELETE `/security/push-tokens/:id` removes an owned registration. The response explicitly reports `deliveryEnabled: false`; push transport/credentials are not configured.
 
 Real payment/card tokenization, banking/investment execution, identity-verification providers and their webhooks remain excluded by the original simulation-only requirement. No placeholder webhooks accept unauthenticated fake financial events, and no simulated identity result sets `kycVerified` to true. These integrations need separately selected providers and authorization.
+
+Paystack test card linking and its signed webhook are now implemented as a sandbox-only addition. See [Paystack setup and client flow](paystack.md). No real payment rails are enabled.
 
 ## Migration and verification
 

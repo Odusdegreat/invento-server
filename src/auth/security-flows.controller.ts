@@ -31,7 +31,7 @@ import { fail } from '../common/api-error.js';
 
 @ApiTags('security flows')
 @ApiBearerAuth()
-@Controller(['api/v1', ''])
+@Controller('')
 export class SecurityFlowsController {
   constructor(
     @Inject(AuthService) private auth: AuthService,

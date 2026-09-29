@@ -1,0 +1,27 @@
+meta {
+  name: POST /cards/link/confirm
+  type: http
+  seq: 63
+}
+
+post {
+  url: {{baseUrl}}/cards/link/confirm
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "reference": "{{paystackReference}}"
+  }
+}
+
+script:post-response {
+  if (res.body.cardId) bru.setVar("cardId", res.body.cardId);
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
+}

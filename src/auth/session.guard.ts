@@ -12,7 +12,8 @@ import { AuthService, type Session } from './auth.service.js';
 import { fail } from '../common/api-error.js';
 import { ApiOperation } from '@nestjs/swagger';
 export type AuthRequest = Request & { session: Session };
-export const Public = () => applyDecorators(SetMetadata('public', true), ApiOperation({security:[]}));
+export const Public = () =>
+  applyDecorators(SetMetadata('public', true), ApiOperation({ security: [] }));
 @Injectable()
 export class SessionGuard implements CanActivate {
   private buckets = new Map<string, { count: number; expires: number }>();

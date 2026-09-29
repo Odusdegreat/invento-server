@@ -1,0 +1,27 @@
+meta {
+  name: POST /auth/pin/setup/verify
+  type: http
+  seq: 81
+}
+
+post {
+  url: {{baseUrl}}/auth/pin/setup/verify
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "password": "{{password}}",
+    "stepUpToken": "{{stepUpToken}}"
+  }
+}
+
+script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
+}

@@ -1,14 +1,16 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { v7 as id } from 'uuid';
 import { DatabaseService, type Tx } from '../database/database.service.js';
 import { AuthService, digest, type Session } from '../auth/auth.service.js';
 import { LedgerService } from '../ledger/ledger.service.js';
 import { fail } from '../common/api-error.js';
 import { fee, minor, money } from '../common/money.js';
-import type { QuoteDto, TransferDto, OrderDto } from './dto.js';
+import type { QuoteDto, TransferDto, OrderDto, TopUpDto } from './dto.js';
 export function numericRows<T>(value: T): T {
   const fields = new Set([
     'amount',
+    'debitedAmount',
     'fee',
     'price',
     'previousClose',
@@ -43,7 +45,51 @@ export class FinanceService {
     @Inject(DatabaseService) private db: DatabaseService,
     @Inject(AuthService) private auth: AuthService,
     @Inject(LedgerService) private ledger: LedgerService,
+    @Inject(ConfigService) private config: ConfigService,
   ) {}
+  private sandbox() {
+    if (this.config.get<string>('SANDBOX_ENABLED') !== 'true')
+      fail('sandbox_disabled', 'Enable SANDBOX_ENABLED on an isolated simulated-money database', 403);
+  }
+  async receivingDetails(s: Session, accountId: string) {
+    this.sandbox();
+    const [account] = await this.db.sql`select id from accounts where id=${accountId} and "userId"=${s.userId}`;
+    if (!account) fail('not_found', 'Account not found', 404);
+    return this.lookupRecipient(accountId);
+  }
+  async lookupRecipient(identifier: string) {
+    this.sandbox();
+    const [recipient] = await this.db.sql`select a.id as identifier,u."fullName" as name,a.currency,a.frozen from accounts a join users u on u.id=a."userId" where a.id=${identifier}`;
+    if (!recipient) fail('not_found', 'Recipient not found', 404);
+    return { identifier: recipient.identifier as string, name: recipient.name as string, currency: recipient.currency as string, frozen: recipient.frozen as boolean, bank: 'Invento Sandbox', simulated: true };
+  }
+  async topUp(s: Session, dto: TopUpDto, key?: string) {
+    this.sandbox();
+    if (!key || !/^[a-zA-Z0-9_-]{8,128}$/.test(key))
+      fail('validation_error', 'A valid Idempotency-Key is required');
+    const amount = minor(dto.amount);
+    if (amount > 100000000n) fail('invalid_amount', 'Maximum top-up is 1000000');
+    const requestHash = digest(JSON.stringify({ action: 'top_up', accountId: dto.accountId, amount: dto.amount }));
+    return this.db.sql.begin(async tx => {
+      await this.auth.lock(tx, s);
+      const [cached] = await tx`select * from idempotency_keys where "userId"=${s.userId} and key=${key}`;
+      if (cached) {
+        if (cached.requestHash !== requestHash) fail('conflict', 'Idempotency key already used', 409);
+        return cached.response;
+      }
+      const account = await this.account(tx, s, dto.accountId);
+      const opening = await this.ledger.system(tx, 'opening', account.currency as string);
+      const reference = 'TOP-' + id();
+      const journal = await this.ledger.post(tx, reference, [
+        { accountId: opening, side: 'debit', amount },
+        { accountId: account.ledgerId as string, side: 'credit', amount },
+      ]);
+      const [transaction] = await tx`insert into transactions(id,"userId","accountId","journalEntryId",amount,currency,kind,category,description,counterparty,status,reference) values (${id()},${s.userId},${dto.accountId},${journal},${money(amount)},${account.currency},'in','income','Sandbox top-up','Invento Sandbox','completed',${reference}) returning id,"accountId",amount,currency,status,reference`;
+      const response = numericRows({ ...transaction, balance: money(await this.ledger.balance(tx, dto.accountId)), simulated: true });
+      await tx`insert into idempotency_keys("userId",key,"requestHash",response) values (${s.userId},${key},${requestHash},${tx.json(response)})`;
+      return response;
+    });
+  }
   async account(tx: Tx, s: Session, accountId: string) {
     const [account] =
       await tx`select a.*,l.id as "ledgerId" from accounts a join ledger_accounts l on l."accountId"=a.id where a.id=${accountId} and a."userId"=${s.userId} for update of a`;
@@ -57,6 +103,10 @@ export class FinanceService {
     return account;
   }
   async quote(s: Session, dto: QuoteDto) {
+    const recipient = dto.recipientAccountId ? await this.lookupRecipient(dto.recipientAccountId) : undefined;
+    if (recipient?.frozen) fail('account_frozen', 'Recipient account is frozen', 403);
+    if (recipient && dto.recipientAccountId === dto.fromAccountId) fail('invalid_recipient', 'Choose another account');
+    if (recipient && recipient.currency !== 'USD') fail('unsupported_currency', 'Recipient must use USD');
     return this.db.sql.begin(async (tx) => {
       await this.auth.lock(tx, s);
       const account = await this.account(tx, s, dto.fromAccountId);
@@ -69,10 +119,17 @@ export class FinanceService {
         total: money(amount + charge),
         currency: account.currency,
         sufficientFunds: balance >= amount + charge,
+        simulated: true,
+        ...(recipient ? { recipient } : {}),
       };
     });
   }
   async send(s: Session, dto: TransferDto, key: string | undefined) {
+    if (Boolean(dto.beneficiaryId) === Boolean(dto.recipientAccountId))
+      fail('validation_error', 'Provide exactly one of beneficiaryId or recipientAccountId');
+    if (dto.recipientAccountId || dto.simulationOutcome) this.sandbox();
+    if (dto.recipientAccountId && dto.simulationOutcome)
+      fail('validation_error', 'simulationOutcome is for external transfers only');
     if (!key || !/^[a-zA-Z0-9_-]{8,128}$/.test(key))
       fail(
         'validation_error',
@@ -85,11 +142,17 @@ export class FinanceService {
         action: 'transfer',
         fromAccountId: dto.fromAccountId,
         beneficiaryId: dto.beneficiaryId,
+        recipientAccountId: dto.recipientAccountId,
+        simulationOutcome: dto.simulationOutcome ?? 'success',
         amount: dto.amount,
         note: dto.note ?? '',
       }),
     );
     return this.db.sql.begin(async (tx) => {
+      // Lock both users in a stable order, including FK parents, before account
+      // and ledger writes so opposite-direction transfers cannot deadlock.
+      if (dto.recipientAccountId)
+        await tx`select id from users where id=${s.userId} or id in (select "userId" from accounts where id=${dto.recipientAccountId}) order by id for update`;
       await this.auth.lock(tx, s);
       const [cached] =
         await tx`select * from idempotency_keys where "userId"=${s.userId} and key=${key}`;
@@ -103,16 +166,25 @@ export class FinanceService {
         return cached.response;
       }
       const account = await this.account(tx, s, dto.fromAccountId);
-      const [beneficiary] =
-        await tx`select * from beneficiaries where id=${dto.beneficiaryId} and "userId"=${s.userId} and "deletedAt" is null`;
-      if (!beneficiary) fail('not_found', 'Beneficiary not found', 404);
+      const [recipient] = dto.recipientAccountId
+        ? await tx`select a.*,l.id as "ledgerId",u."fullName" as name from accounts a join ledger_accounts l on l."accountId"=a.id join users u on u.id=a."userId" where a.id=${dto.recipientAccountId} for update of a`
+        : [];
+      const [beneficiary] = dto.beneficiaryId
+        ? await tx`select * from beneficiaries where id=${dto.beneficiaryId} and "userId"=${s.userId} and "deletedAt" is null`
+        : [];
+      if (!recipient && !beneficiary) fail('not_found', 'Recipient not found', 404);
+      if (recipient?.id === account.id) fail('invalid_recipient', 'Choose another account');
+      if (recipient?.frozen) fail('account_frozen', 'Recipient account is frozen', 403);
+      if (recipient && recipient.currency !== account.currency) fail('unsupported_currency', 'Account currencies must match');
+      const counterparty = (recipient ?? beneficiary).name;
       if ((await this.ledger.balance(tx, dto.fromAccountId)) < amount + charge)
         fail('insufficient_funds', 'Insufficient funds');
       await this.auth.consume(tx, s, 'transfer', dto.stepUpToken);
       const transferId = id(),
         transactionId = id(),
         reference = 'INV-' + id();
-      const settlement = await this.ledger.system(
+      const failed = dto.simulationOutcome === 'failure';
+      const settlement = recipient?.ledgerId as string || await this.ledger.system(
           tx,
           'settlement',
           account.currency as string,
@@ -122,7 +194,7 @@ export class FinanceService {
           'fee',
           account.currency as string,
         );
-      const journalId = await this.ledger.post(tx, reference, [
+      const journalId = failed ? null : await this.ledger.post(tx, reference, [
         {
           accountId: account.ledgerId as string,
           side: 'debit',
@@ -131,15 +203,24 @@ export class FinanceService {
         { accountId: settlement, side: 'credit', amount },
         { accountId: feeAccount, side: 'credit', amount: charge },
       ]);
-      await tx`insert into transactions(id,"userId","accountId","journalEntryId",amount,fee,currency,kind,category,description,counterparty,status,reference) values (${transactionId},${s.userId},${dto.fromAccountId},${journalId},${money(amount)},${money(charge)},${account.currency},'out','transfer',${dto.note ?? 'Simulated transfer'},${beneficiary.name},'completed',${reference})`;
+      const status = failed ? 'failed' : 'completed';
+      await tx`insert into transactions(id,"userId","accountId","journalEntryId",amount,fee,currency,kind,category,description,counterparty,status,reference) values (${transactionId},${s.userId},${dto.fromAccountId},${journalId},${money(amount)},${failed ? 0 : money(charge)},${account.currency},'out','transfer',${dto.note ?? 'Simulated transfer'},${counterparty},${status},${reference})`;
+      if (recipient) {
+        const [sender] = await tx`select "fullName" from users where id=${s.userId}`;
+        const incomingId = id();
+        await tx`insert into transactions(id,"userId","accountId","journalEntryId",amount,currency,kind,category,description,counterparty,status,reference) values (${incomingId},${recipient.userId},${recipient.id},${journalId},${money(amount)},${account.currency},'in','transfer',${dto.note ?? 'Simulated transfer'},${sender.fullName},'completed',${reference})`;
+        await tx`insert into notifications(id,"userId",kind,title,body,"targetType","targetId") values (${id()},${recipient.userId},'transaction','Transfer received','You received simulated funds.','transaction',${incomingId})`;
+      }
       const [transfer] =
-        await tx`insert into transfers(id,"userId","fromAccountId","beneficiaryId","transactionId",amount,fee,currency,note,reference) values (${transferId},${s.userId},${dto.fromAccountId},${dto.beneficiaryId},${transactionId},${money(amount)},${money(charge)},${account.currency},${dto.note ?? ''},${reference}) returning id,"fromAccountId","beneficiaryId","transactionId",amount,fee,currency,note,reference,status,"createdAt"`;
+        await tx`insert into transfers(id,"userId","fromAccountId","beneficiaryId","recipientAccountId","transactionId",amount,fee,currency,note,reference,status) values (${transferId},${s.userId},${dto.fromAccountId},${dto.beneficiaryId ?? null},${dto.recipientAccountId ?? null},${transactionId},${money(amount)},${failed ? 0 : money(charge)},${account.currency},${dto.note ?? ''},${reference},${status}) returning id,"fromAccountId","beneficiaryId","recipientAccountId","transactionId",amount,fee,currency,note,reference,status,"createdAt"`;
       const response = numericRows({
         ...transfer,
-        total: money(amount + charge),
-        counterparty: beneficiary.name,
+        total: money(amount + (failed ? 0n : charge)),
+        debitedAmount: failed ? 0 : money(amount + charge),
+        simulated: true,
+        counterparty,
       });
-      await tx`insert into notifications(id,"userId",kind,title,body,"targetType","targetId") values (${id()},${s.userId},'transaction','Transfer complete','Your simulated transfer is complete.','transaction',${transactionId})`;
+      await tx`insert into notifications(id,"userId",kind,title,body,"targetType","targetId") values (${id()},${s.userId},'transaction',${failed ? 'Transfer failed' : 'Transfer complete'},${failed ? 'Simulated bank rejection. No funds were debited.' : 'Your simulated transfer is complete.'},'transaction',${transactionId})`;
       await tx`insert into idempotency_keys("userId",key,"requestHash",response) values (${s.userId},${key},${requestHash},${tx.json(response)})`;
       return response;
     });

@@ -1,0 +1,26 @@
+meta {
+  name: PATCH /accounts/{id}
+  type: http
+  seq: 7
+}
+
+patch {
+  url: {{baseUrl}}/accounts/{{accountId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "frozen": true
+  }
+}
+
+script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
+}

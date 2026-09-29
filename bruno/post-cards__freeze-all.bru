@@ -1,7 +1,7 @@
 meta {
   name: POST /cards/freeze-all
   type: http
-  seq: 26
+  seq: 31
 }
 
 post {
@@ -18,4 +18,9 @@ body:json {
   {
     "frozen": true
   }
+}
+
+script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
 }

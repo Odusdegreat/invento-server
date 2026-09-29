@@ -1,0 +1,26 @@
+meta {
+  name: POST /auth/2fa/confirm
+  type: http
+  seq: 83
+}
+
+post {
+  url: {{baseUrl}}/auth/2fa/confirm
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "code": "{{otpCode}}"
+  }
+}
+
+script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
+}

@@ -10,60 +10,16 @@
             "description": ""
           }
         },
+        "security": [],
+        "summary": "",
         "tags": [
           "Health"
         ]
       }
     },
-    "/api/v1/users/me": {
-      "get": {
-        "operationId": "ApiController_user[0]",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      },
-      "patch": {
-        "operationId": "ApiController_updateUser[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateProfileDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
     "/users/me": {
       "get": {
-        "operationId": "ApiController_user[1]",
+        "operationId": "ApiController_user",
         "parameters": [],
         "responses": {
           "200": {
@@ -80,7 +36,7 @@
         ]
       },
       "patch": {
-        "operationId": "ApiController_updateUser[1]",
+        "operationId": "ApiController_updateUser",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -92,25 +48,6 @@
             }
           }
         },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/accounts": {
-      "get": {
-        "operationId": "ApiController_accounts[0]",
-        "parameters": [],
         "responses": {
           "200": {
             "description": ""
@@ -128,26 +65,7 @@
     },
     "/accounts": {
       "get": {
-        "operationId": "ApiController_accounts[1]",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/accounts/total-balance": {
-      "get": {
-        "operationId": "ApiController_totals[0]",
+        "operationId": "ApiController_accounts",
         "parameters": [],
         "responses": {
           "200": {
@@ -166,37 +84,8 @@
     },
     "/accounts/total-balance": {
       "get": {
-        "operationId": "ApiController_totals[1]",
+        "operationId": "ApiController_totals",
         "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/accounts/summary": {
-      "get": {
-        "operationId": "ApiController_accountSummary[0]",
-        "parameters": [
-          {
-            "name": "currency",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "default": "USD",
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": ""
@@ -214,7 +103,7 @@
     },
     "/accounts/summary": {
       "get": {
-        "operationId": "ApiController_accountSummary[1]",
+        "operationId": "ApiController_accountSummary",
         "parameters": [
           {
             "name": "currency",
@@ -222,70 +111,6 @@
             "in": "query",
             "schema": {
               "default": "USD",
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/accounts/{id}": {
-      "patch": {
-        "operationId": "ApiController_updateAccount[0]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AccountPatchDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      },
-      "get": {
-        "operationId": "ApiController_account[0]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
               "type": "string"
             }
           }
@@ -307,7 +132,7 @@
     },
     "/accounts/{id}": {
       "patch": {
-        "operationId": "ApiController_updateAccount[1]",
+        "operationId": "ApiController_updateAccount",
         "parameters": [
           {
             "name": "id",
@@ -343,35 +168,7 @@
         ]
       },
       "get": {
-        "operationId": "ApiController_account[1]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/accounts/{id}/freeze": {
-      "patch": {
-        "operationId": "ApiController_freezeAccount[0]",
+        "operationId": "ApiController_account",
         "parameters": [
           {
             "name": "id",
@@ -399,35 +196,7 @@
     },
     "/accounts/{id}/freeze": {
       "patch": {
-        "operationId": "ApiController_freezeAccount[1]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/accounts/{id}/unfreeze": {
-      "patch": {
-        "operationId": "ApiController_unfreezeAccount[0]",
+        "operationId": "ApiController_freezeAccount",
         "parameters": [
           {
             "name": "id",
@@ -455,7 +224,7 @@
     },
     "/accounts/{id}/unfreeze": {
       "patch": {
-        "operationId": "ApiController_unfreezeAccount[1]",
+        "operationId": "ApiController_unfreezeAccount",
         "parameters": [
           {
             "name": "id",
@@ -481,201 +250,9 @@
         ]
       }
     },
-    "/api/v1/transactions": {
-      "get": {
-        "operationId": "ApiController_transactions[0]",
-        "parameters": [
-          {
-            "name": "limit",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "maximum": 100,
-              "default": 50,
-              "type": "number"
-            }
-          },
-          {
-            "name": "before",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "accountId",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "category",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "kind",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "in",
-                "out"
-              ]
-            }
-          },
-          {
-            "name": "type",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "in",
-                "out"
-              ]
-            }
-          },
-          {
-            "name": "from",
-            "required": false,
-            "in": "query",
-            "description": "Inclusive ISO-8601 timestamp",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "to",
-            "required": false,
-            "in": "query",
-            "description": "Exclusive ISO-8601 timestamp",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
     "/transactions": {
       "get": {
-        "operationId": "ApiController_transactions[1]",
-        "parameters": [
-          {
-            "name": "limit",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "maximum": 100,
-              "default": 50,
-              "type": "number"
-            }
-          },
-          {
-            "name": "before",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "accountId",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "category",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "kind",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "in",
-                "out"
-              ]
-            }
-          },
-          {
-            "name": "type",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "in",
-                "out"
-              ]
-            }
-          },
-          {
-            "name": "from",
-            "required": false,
-            "in": "query",
-            "description": "Inclusive ISO-8601 timestamp",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "to",
-            "required": false,
-            "in": "query",
-            "description": "Exclusive ISO-8601 timestamp",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/transactions/summary": {
-      "get": {
-        "operationId": "ApiController_transactionTotals[0]",
+        "operationId": "ApiController_transactions",
         "parameters": [
           {
             "name": "limit",
@@ -771,7 +348,7 @@
     },
     "/transactions/summary": {
       "get": {
-        "operationId": "ApiController_transactionTotals[1]",
+        "operationId": "ApiController_transactionTotals",
         "parameters": [
           {
             "name": "limit",
@@ -865,37 +442,9 @@
         ]
       }
     },
-    "/api/v1/transactions/{id}": {
-      "get": {
-        "operationId": "ApiController_transaction[0]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
     "/transactions/{id}": {
       "get": {
-        "operationId": "ApiController_transaction[1]",
+        "operationId": "ApiController_transaction",
         "parameters": [
           {
             "name": "id",
@@ -921,7 +470,7 @@
         ]
       }
     },
-    "/api/v1/transactions/{id}/dispute": {
+    "/transactions/{id}/dispute": {
       "post": {
         "operationId": "ApiController_dispute[0]",
         "parameters": [
@@ -959,7 +508,7 @@
         ]
       }
     },
-    "/api/v1/transactions/{id}/disputes": {
+    "/transactions/{id}/disputes": {
       "post": {
         "operationId": "ApiController_dispute[1]",
         "parameters": [
@@ -997,114 +546,9 @@
         ]
       }
     },
-    "/transactions/{id}/dispute": {
-      "post": {
-        "operationId": "ApiController_dispute[2]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DisputeDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/transactions/{id}/disputes": {
-      "post": {
-        "operationId": "ApiController_dispute[3]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DisputeDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/transfers/quote": {
-      "post": {
-        "operationId": "ApiController_quote[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/QuoteDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
     "/transfers/quote": {
       "post": {
-        "operationId": "ApiController_quote[1]",
+        "operationId": "ApiController_quote",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -1112,52 +556,6 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/QuoteDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/transfers": {
-      "post": {
-        "operationId": "ApiController_send[0]",
-        "parameters": [
-          {
-            "name": "idempotency-key",
-            "required": true,
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "Idempotency-Key",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TransferDto"
               }
             }
           }
@@ -1179,7 +577,7 @@
     },
     "/transfers": {
       "post": {
-        "operationId": "ApiController_send[1]",
+        "operationId": "ApiController_send",
         "parameters": [
           {
             "name": "idempotency-key",
@@ -1223,65 +621,9 @@
         ]
       }
     },
-    "/api/v1/transfers/{id}": {
-      "get": {
-        "operationId": "ApiController_transfer[0]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
     "/transfers/{id}": {
       "get": {
-        "operationId": "ApiController_transfer[1]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/transfers/{id}/receipt": {
-      "get": {
-        "operationId": "ApiController_receipt[0]",
+        "operationId": "ApiController_transfer",
         "parameters": [
           {
             "name": "id",
@@ -1309,7 +651,7 @@
     },
     "/transfers/{id}/receipt": {
       "get": {
-        "operationId": "ApiController_receipt[1]",
+        "operationId": "ApiController_receipt",
         "parameters": [
           {
             "name": "id",
@@ -1322,52 +664,6 @@
         ],
         "responses": {
           "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/beneficiaries": {
-      "get": {
-        "operationId": "ApiController_beneficiaries[0]",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      },
-      "post": {
-        "operationId": "ApiController_addBeneficiary[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/BeneficiaryDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
             "description": ""
           }
         },
@@ -1383,7 +679,7 @@
     },
     "/beneficiaries": {
       "get": {
-        "operationId": "ApiController_beneficiaries[1]",
+        "operationId": "ApiController_beneficiaries",
         "parameters": [],
         "responses": {
           "200": {
@@ -1400,7 +696,7 @@
         ]
       },
       "post": {
-        "operationId": "ApiController_addBeneficiary[1]",
+        "operationId": "ApiController_addBeneficiary",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -1427,37 +723,9 @@
         ]
       }
     },
-    "/api/v1/beneficiaries/{id}": {
-      "delete": {
-        "operationId": "ApiController_removeBeneficiary[0]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
     "/beneficiaries/{id}": {
       "delete": {
-        "operationId": "ApiController_removeBeneficiary[1]",
+        "operationId": "ApiController_removeBeneficiary",
         "parameters": [
           {
             "name": "id",
@@ -1468,79 +736,6 @@
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/cards": {
-      "get": {
-        "operationId": "ApiController_cards[0]",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      },
-      "post": {
-        "operationId": "ApiController_addCard[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CardDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      },
-      "patch": {
-        "operationId": "ApiController_updateCards[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AccountPatchDto"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": ""
@@ -1558,7 +753,7 @@
     },
     "/cards": {
       "get": {
-        "operationId": "ApiController_cards[1]",
+        "operationId": "ApiController_cards",
         "parameters": [],
         "responses": {
           "200": {
@@ -1575,7 +770,7 @@
         ]
       },
       "post": {
-        "operationId": "ApiController_addCard[1]",
+        "operationId": "ApiController_addCard",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -1602,7 +797,7 @@
         ]
       },
       "patch": {
-        "operationId": "ApiController_updateCards[1]",
+        "operationId": "ApiController_updateCards",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -1629,73 +824,9 @@
         ]
       }
     },
-    "/api/v1/cards/{id}": {
-      "patch": {
-        "operationId": "ApiController_updateCard[0]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CardPatchDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      },
-      "delete": {
-        "operationId": "ApiController_removeCard[0]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
     "/cards/{id}": {
       "patch": {
-        "operationId": "ApiController_updateCard[1]",
+        "operationId": "ApiController_updateCard",
         "parameters": [
           {
             "name": "id",
@@ -1731,35 +862,7 @@
         ]
       },
       "delete": {
-        "operationId": "ApiController_removeCard[1]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/cards/{id}/default": {
-      "patch": {
-        "operationId": "ApiController_defaultCard[0]",
+        "operationId": "ApiController_removeCard",
         "parameters": [
           {
             "name": "id",
@@ -1787,35 +890,7 @@
     },
     "/cards/{id}/default": {
       "patch": {
-        "operationId": "ApiController_defaultCard[1]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/cards/{id}/freeze": {
-      "patch": {
-        "operationId": "ApiController_freezeCard[0]",
+        "operationId": "ApiController_defaultCard",
         "parameters": [
           {
             "name": "id",
@@ -1843,35 +918,7 @@
     },
     "/cards/{id}/freeze": {
       "patch": {
-        "operationId": "ApiController_freezeCard[1]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/cards/{id}/unfreeze": {
-      "patch": {
-        "operationId": "ApiController_unfreezeCard[0]",
+        "operationId": "ApiController_freezeCard",
         "parameters": [
           {
             "name": "id",
@@ -1899,7 +946,7 @@
     },
     "/cards/{id}/unfreeze": {
       "patch": {
-        "operationId": "ApiController_unfreezeCard[1]",
+        "operationId": "ApiController_unfreezeCard",
         "parameters": [
           {
             "name": "id",
@@ -1912,35 +959,6 @@
         ],
         "responses": {
           "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/cards/freeze-all": {
-      "post": {
-        "operationId": "ApiController_freezeCards[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/FrozenDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
             "description": ""
           }
         },
@@ -1956,7 +974,7 @@
     },
     "/cards/freeze-all": {
       "post": {
-        "operationId": "ApiController_freezeCards[1]",
+        "operationId": "ApiController_freezeCards",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -1983,52 +1001,9 @@
         ]
       }
     },
-    "/api/v1/investments/products": {
-      "get": {
-        "operationId": "ApiController_products[0]",
-        "parameters": [
-          {
-            "name": "search",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "assetClass",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "treasury",
-                "equity",
-                "etf",
-                "crypto",
-                "fixed-deposit"
-              ]
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
     "/investments/products": {
       "get": {
-        "operationId": "ApiController_products[1]",
+        "operationId": "ApiController_products",
         "parameters": [
           {
             "name": "search",
@@ -2051,34 +1026,6 @@
                 "crypto",
                 "fixed-deposit"
               ]
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/investments/products/{id}": {
-      "get": {
-        "operationId": "ApiController_product[0]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
             }
           }
         ],
@@ -2099,7 +1046,7 @@
     },
     "/investments/products/{id}": {
       "get": {
-        "operationId": "ApiController_product[1]",
+        "operationId": "ApiController_product",
         "parameters": [
           {
             "name": "id",
@@ -2110,25 +1057,6 @@
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/investments/holdings": {
-      "get": {
-        "operationId": "ApiController_holdings[0]",
-        "parameters": [],
         "responses": {
           "200": {
             "description": ""
@@ -2146,73 +1074,10 @@
     },
     "/investments/holdings": {
       "get": {
-        "operationId": "ApiController_holdings[1]",
+        "operationId": "ApiController_holdings",
         "parameters": [],
         "responses": {
           "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/investments/orders": {
-      "get": {
-        "operationId": "ApiController_orders[0]",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      },
-      "post": {
-        "operationId": "ApiController_order[0]",
-        "parameters": [
-          {
-            "name": "idempotency-key",
-            "required": true,
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "Idempotency-Key",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OrderDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
             "description": ""
           }
         },
@@ -2228,7 +1093,7 @@
     },
     "/investments/orders": {
       "get": {
-        "operationId": "ApiController_orders[1]",
+        "operationId": "ApiController_orders",
         "parameters": [],
         "responses": {
           "200": {
@@ -2245,7 +1110,7 @@
         ]
       },
       "post": {
-        "operationId": "ApiController_order[1]",
+        "operationId": "ApiController_order",
         "parameters": [
           {
             "name": "idempotency-key",
@@ -2289,37 +1154,9 @@
         ]
       }
     },
-    "/api/v1/investments/orders/{id}": {
-      "get": {
-        "operationId": "ApiController_orderDetails[0]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
     "/investments/orders/{id}": {
       "get": {
-        "operationId": "ApiController_orderDetails[1]",
+        "operationId": "ApiController_orderDetails",
         "parameters": [
           {
             "name": "id",
@@ -2332,35 +1169,6 @@
         ],
         "responses": {
           "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/investments/orders/quote": {
-      "post": {
-        "operationId": "ApiController_orderQuote[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OrderDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
             "description": ""
           }
         },
@@ -2376,7 +1184,7 @@
     },
     "/investments/orders/quote": {
       "post": {
-        "operationId": "ApiController_orderQuote[1]",
+        "operationId": "ApiController_orderQuote",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -2403,47 +1211,9 @@
         ]
       }
     },
-    "/api/v1/investments/portfolio": {
-      "get": {
-        "operationId": "ApiController_portfolio[0]",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
     "/investments/portfolio": {
       "get": {
-        "operationId": "ApiController_portfolio[1]",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/investments/watchlist": {
-      "get": {
-        "operationId": "ApiController_watchlist[0]",
+        "operationId": "ApiController_portfolio",
         "parameters": [],
         "responses": {
           "200": {
@@ -2462,88 +1232,8 @@
     },
     "/investments/watchlist": {
       "get": {
-        "operationId": "ApiController_watchlist[1]",
+        "operationId": "ApiController_watchlist",
         "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/investments/watchlist/{id}": {
-      "post": {
-        "operationId": "ApiController_watch[0]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      },
-      "put": {
-        "operationId": "ApiController_putWatch[0]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      },
-      "delete": {
-        "operationId": "ApiController_unwatch[0]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": ""
@@ -2561,7 +1251,7 @@
     },
     "/investments/watchlist/{id}": {
       "post": {
-        "operationId": "ApiController_watch[1]",
+        "operationId": "ApiController_watch",
         "parameters": [
           {
             "name": "id",
@@ -2587,7 +1277,7 @@
         ]
       },
       "put": {
-        "operationId": "ApiController_putWatch[1]",
+        "operationId": "ApiController_putWatch",
         "parameters": [
           {
             "name": "id",
@@ -2613,7 +1303,7 @@
         ]
       },
       "delete": {
-        "operationId": "ApiController_unwatch[1]",
+        "operationId": "ApiController_unwatch",
         "parameters": [
           {
             "name": "id",
@@ -2639,47 +1329,9 @@
         ]
       }
     },
-    "/api/v1/dashboard": {
-      "get": {
-        "operationId": "ApiController_dashboard[0]",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
     "/dashboard": {
       "get": {
-        "operationId": "ApiController_dashboard[1]",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/home/summary": {
-      "get": {
-        "operationId": "ApiController_home[0]",
+        "operationId": "ApiController_dashboard",
         "parameters": [],
         "responses": {
           "200": {
@@ -2698,26 +1350,7 @@
     },
     "/home/summary": {
       "get": {
-        "operationId": "ApiController_home[1]",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/dashboard/summary": {
-      "get": {
-        "operationId": "ApiController_dashboardSummary[0]",
+        "operationId": "ApiController_home",
         "parameters": [],
         "responses": {
           "200": {
@@ -2736,26 +1369,7 @@
     },
     "/dashboard/summary": {
       "get": {
-        "operationId": "ApiController_dashboardSummary[1]",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/dashboard/cash-flow": {
-      "get": {
-        "operationId": "ApiController_cashFlow[0]",
+        "operationId": "ApiController_dashboardSummary",
         "parameters": [],
         "responses": {
           "200": {
@@ -2774,26 +1388,7 @@
     },
     "/dashboard/cash-flow": {
       "get": {
-        "operationId": "ApiController_cashFlow[1]",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/dashboard/spending": {
-      "get": {
-        "operationId": "ApiController_spending[0]",
+        "operationId": "ApiController_cashFlow",
         "parameters": [],
         "responses": {
           "200": {
@@ -2812,46 +1407,8 @@
     },
     "/dashboard/spending": {
       "get": {
-        "operationId": "ApiController_spending[1]",
+        "operationId": "ApiController_spending",
         "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/notifications": {
-      "get": {
-        "operationId": "ApiController_notifications[0]",
-        "parameters": [
-          {
-            "name": "limit",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "maximum": 100,
-              "default": 50,
-              "type": "number"
-            }
-          },
-          {
-            "name": "before",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": ""
@@ -2869,7 +1426,7 @@
     },
     "/notifications": {
       "get": {
-        "operationId": "ApiController_notifications[1]",
+        "operationId": "ApiController_notifications",
         "parameters": [
           {
             "name": "limit",
@@ -2905,67 +1462,12 @@
         ]
       }
     },
-    "/api/v1/notifications/unread-count": {
-      "get": {
-        "operationId": "ApiController_unread[0]",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
     "/notifications/unread-count": {
       "get": {
-        "operationId": "ApiController_unread[1]",
+        "operationId": "ApiController_unread",
         "parameters": [],
         "responses": {
           "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/notifications/read-all": {
-      "patch": {
-        "operationId": "ApiController_readAll[0]",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      },
-      "post": {
-        "operationId": "ApiController_readAllPost[0]",
-        "parameters": [],
-        "responses": {
-          "201": {
             "description": ""
           }
         },
@@ -2981,7 +1483,7 @@
     },
     "/notifications/read-all": {
       "patch": {
-        "operationId": "ApiController_readAll[1]",
+        "operationId": "ApiController_readAll",
         "parameters": [],
         "responses": {
           "200": {
@@ -2998,7 +1500,7 @@
         ]
       },
       "post": {
-        "operationId": "ApiController_readAllPost[1]",
+        "operationId": "ApiController_readAllPost",
         "parameters": [],
         "responses": {
           "201": {
@@ -3015,65 +1517,9 @@
         ]
       }
     },
-    "/api/v1/notifications/{id}": {
-      "patch": {
-        "operationId": "ApiController_readPatch[0]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
     "/notifications/{id}": {
       "patch": {
-        "operationId": "ApiController_readPatch[1]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/notifications/{id}/read": {
-      "patch": {
-        "operationId": "ApiController_read[0]",
+        "operationId": "ApiController_readPatch",
         "parameters": [
           {
             "name": "id",
@@ -3101,7 +1547,7 @@
     },
     "/notifications/{id}/read": {
       "patch": {
-        "operationId": "ApiController_read[1]",
+        "operationId": "ApiController_read",
         "parameters": [
           {
             "name": "id",
@@ -3112,52 +1558,6 @@
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/security": {
-      "get": {
-        "operationId": "ApiController_security[0]",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      },
-      "patch": {
-        "operationId": "ApiController_updateSecurity[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SecurityDto"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": ""
@@ -3175,7 +1575,7 @@
     },
     "/security": {
       "get": {
-        "operationId": "ApiController_security[1]",
+        "operationId": "ApiController_security",
         "parameters": [],
         "responses": {
           "200": {
@@ -3192,7 +1592,7 @@
         ]
       },
       "patch": {
-        "operationId": "ApiController_updateSecurity[1]",
+        "operationId": "ApiController_updateSecurity",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -3219,57 +1619,10 @@
         ]
       }
     },
-    "/api/v1/security/devices": {
-      "get": {
-        "operationId": "ApiController_devices[0]",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
     "/security/devices": {
       "get": {
-        "operationId": "ApiController_devices[1]",
+        "operationId": "ApiController_devices",
         "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/security/devices/{id}": {
-      "delete": {
-        "operationId": "ApiController_revoke[0]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": ""
@@ -3287,7 +1640,7 @@
     },
     "/security/devices/{id}": {
       "delete": {
-        "operationId": "ApiController_revoke[1]",
+        "operationId": "ApiController_revoke",
         "parameters": [
           {
             "name": "id",
@@ -3300,34 +1653,6 @@
         ],
         "responses": {
           "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
-    "/api/v1/security/devices/{id}/revoke": {
-      "post": {
-        "operationId": "ApiController_revokePost[0]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
             "description": ""
           }
         },
@@ -3343,7 +1668,7 @@
     },
     "/security/devices/{id}/revoke": {
       "post": {
-        "operationId": "ApiController_revokePost[1]",
+        "operationId": "ApiController_revokePost",
         "parameters": [
           {
             "name": "id",
@@ -3369,55 +1694,9 @@
         ]
       }
     },
-    "/api/v1/preferences": {
-      "get": {
-        "operationId": "ApiController_preferences[0]",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      },
-      "patch": {
-        "operationId": "ApiController_preference[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PreferencesDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "resources"
-        ]
-      }
-    },
     "/preferences": {
       "get": {
-        "operationId": "ApiController_preferences[1]",
+        "operationId": "ApiController_preferences",
         "parameters": [],
         "responses": {
           "200": {
@@ -3434,7 +1713,7 @@
         ]
       },
       "patch": {
-        "operationId": "ApiController_preference[1]",
+        "operationId": "ApiController_preference",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -3461,16 +1740,35 @@
         ]
       }
     },
-    "/api/v1/auth/register": {
+    "/cards/link/initialize": {
       "post": {
-        "operationId": "AuthController_register[0]",
+        "operationId": "PaystackController_initialize",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "Paystack sandbox"
+        ]
+      }
+    },
+    "/cards/link/confirm": {
+      "post": {
+        "operationId": "PaystackController_confirm",
         "parameters": [],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegisterDto"
+                "$ref": "#/components/schemas/PaystackConfirmDto"
               }
             }
           }
@@ -3486,13 +1784,38 @@
           }
         ],
         "tags": [
-          "auth"
+          "Paystack sandbox"
+        ]
+      }
+    },
+    "/webhooks/paystack": {
+      "post": {
+        "operationId": "PaystackController_webhook",
+        "parameters": [
+          {
+            "name": "x-paystack-signature",
+            "required": true,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [],
+        "summary": "",
+        "tags": [
+          "Paystack sandbox"
         ]
       }
     },
     "/auth/register": {
       "post": {
-        "operationId": "AuthController_register[1]",
+        "operationId": "AuthController_register",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -3509,40 +1832,8 @@
             "description": ""
           }
         },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "auth"
-        ]
-      }
-    },
-    "/api/v1/auth/login": {
-      "post": {
-        "operationId": "AuthController_login[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
+        "security": [],
+        "summary": "",
         "tags": [
           "auth"
         ]
@@ -3550,7 +1841,7 @@
     },
     "/auth/login": {
       "post": {
-        "operationId": "AuthController_login[1]",
+        "operationId": "AuthController_login",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -3567,40 +1858,8 @@
             "description": ""
           }
         },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "auth"
-        ]
-      }
-    },
-    "/api/v1/auth/refresh": {
-      "post": {
-        "operationId": "AuthController_refresh[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RefreshDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
+        "security": [],
+        "summary": "",
         "tags": [
           "auth"
         ]
@@ -3608,7 +1867,7 @@
     },
     "/auth/refresh": {
       "post": {
-        "operationId": "AuthController_refresh[1]",
+        "operationId": "AuthController_refresh",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -3625,30 +1884,8 @@
             "description": ""
           }
         },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "auth"
-        ]
-      }
-    },
-    "/api/v1/auth/logout": {
-      "post": {
-        "operationId": "AuthController_logout[0]",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
+        "security": [],
+        "summary": "",
         "tags": [
           "auth"
         ]
@@ -3656,7 +1893,7 @@
     },
     "/auth/logout": {
       "post": {
-        "operationId": "AuthController_logout[1]",
+        "operationId": "AuthController_logout",
         "parameters": [],
         "responses": {
           "200": {
@@ -3673,7 +1910,7 @@
         ]
       }
     },
-    "/api/v1/auth/password/reset/request": {
+    "/auth/password/reset/request": {
       "post": {
         "operationId": "AuthController_resetRequest[0]",
         "parameters": [],
@@ -3692,17 +1929,14 @@
             "description": ""
           }
         },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
+        "security": [],
+        "summary": "",
         "tags": [
           "auth"
         ]
       }
     },
-    "/api/v1/auth/password-reset/request": {
+    "/auth/password-reset/request": {
       "post": {
         "operationId": "AuthController_resetRequest[1]",
         "parameters": [],
@@ -3721,75 +1955,14 @@
             "description": ""
           }
         },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
+        "security": [],
+        "summary": "",
         "tags": [
           "auth"
         ]
       }
     },
-    "/auth/password/reset/request": {
-      "post": {
-        "operationId": "AuthController_resetRequest[2]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ResetRequestDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "auth"
-        ]
-      }
-    },
-    "/auth/password-reset/request": {
-      "post": {
-        "operationId": "AuthController_resetRequest[3]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ResetRequestDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "auth"
-        ]
-      }
-    },
-    "/api/v1/auth/password/reset/confirm": {
+    "/auth/password/reset/confirm": {
       "post": {
         "operationId": "AuthController_resetConfirm[0]",
         "parameters": [],
@@ -3808,17 +1981,14 @@
             "description": ""
           }
         },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
+        "security": [],
+        "summary": "",
         "tags": [
           "auth"
         ]
       }
     },
-    "/api/v1/auth/password-reset/confirm": {
+    "/auth/password-reset/confirm": {
       "post": {
         "operationId": "AuthController_resetConfirm[1]",
         "parameters": [],
@@ -3837,75 +2007,14 @@
             "description": ""
           }
         },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
+        "security": [],
+        "summary": "",
         "tags": [
           "auth"
         ]
       }
     },
-    "/auth/password/reset/confirm": {
-      "post": {
-        "operationId": "AuthController_resetConfirm[2]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ResetConfirmDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "auth"
-        ]
-      }
-    },
-    "/auth/password-reset/confirm": {
-      "post": {
-        "operationId": "AuthController_resetConfirm[3]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ResetConfirmDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "auth"
-        ]
-      }
-    },
-    "/api/v1/auth/pin/verify": {
+    "/auth/pin/verify": {
       "post": {
         "operationId": "AuthController_verifyPin[0]",
         "parameters": [],
@@ -3934,7 +2043,7 @@
         ]
       }
     },
-    "/api/v1/auth/step-up/verify": {
+    "/auth/step-up/verify": {
       "post": {
         "operationId": "AuthController_verifyPin[1]",
         "parameters": [],
@@ -3963,154 +2072,9 @@
         ]
       }
     },
-    "/auth/pin/verify": {
-      "post": {
-        "operationId": "AuthController_verifyPin[2]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/VerifyPinDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "auth"
-        ]
-      }
-    },
-    "/auth/step-up/verify": {
-      "post": {
-        "operationId": "AuthController_verifyPin[3]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/VerifyPinDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "auth"
-        ]
-      }
-    },
-    "/api/v1/auth/pin/set": {
-      "post": {
-        "operationId": "AuthController_setPin[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PinDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "auth"
-        ]
-      }
-    },
     "/auth/pin/set": {
       "post": {
-        "operationId": "AuthController_setPin[1]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PinDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "auth"
-        ]
-      }
-    },
-    "/api/v1/auth/pin": {
-      "post": {
-        "operationId": "AuthController_changePin[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PinDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "auth"
-        ]
-      }
-    },
-    "/api/v1/auth/pin/change": {
-      "post": {
-        "operationId": "AuthController_changePin[1]",
+        "operationId": "AuthController_setPin",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -4139,7 +2103,7 @@
     },
     "/auth/pin": {
       "post": {
-        "operationId": "AuthController_changePin[2]",
+        "operationId": "AuthController_changePin[0]",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -4168,7 +2132,7 @@
     },
     "/auth/pin/change": {
       "post": {
-        "operationId": "AuthController_changePin[3]",
+        "operationId": "AuthController_changePin[1]",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -4195,38 +2159,9 @@
         ]
       }
     },
-    "/api/v1/auth/password/change": {
-      "post": {
-        "operationId": "AuthController_changePassword[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChangePasswordDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "auth"
-        ]
-      }
-    },
     "/auth/password/change": {
       "post": {
-        "operationId": "AuthController_changePassword[1]",
+        "operationId": "AuthController_changePassword",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -4250,41 +2185,12 @@
         ],
         "tags": [
           "auth"
-        ]
-      }
-    },
-    "/api/v1/auth/email-verification/request": {
-      "post": {
-        "operationId": "SecurityFlowsController_requestEmail[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ResetRequestDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "security flows"
         ]
       }
     },
     "/auth/email-verification/request": {
       "post": {
-        "operationId": "SecurityFlowsController_requestEmail[1]",
+        "operationId": "SecurityFlowsController_requestEmail",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -4301,40 +2207,8 @@
             "description": ""
           }
         },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "security flows"
-        ]
-      }
-    },
-    "/api/v1/auth/email-verification/confirm": {
-      "post": {
-        "operationId": "SecurityFlowsController_confirmEmail[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TokenDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
+        "security": [],
+        "summary": "",
         "tags": [
           "security flows"
         ]
@@ -4342,7 +2216,7 @@
     },
     "/auth/email-verification/confirm": {
       "post": {
-        "operationId": "SecurityFlowsController_confirmEmail[1]",
+        "operationId": "SecurityFlowsController_confirmEmail",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -4359,40 +2233,8 @@
             "description": ""
           }
         },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "security flows"
-        ]
-      }
-    },
-    "/api/v1/auth/pin/setup/verify": {
-      "post": {
-        "operationId": "SecurityFlowsController_pinSetup[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PasswordProofDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
+        "security": [],
+        "summary": "",
         "tags": [
           "security flows"
         ]
@@ -4400,36 +2242,7 @@
     },
     "/auth/pin/setup/verify": {
       "post": {
-        "operationId": "SecurityFlowsController_pinSetup[1]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PasswordProofDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "security flows"
-        ]
-      }
-    },
-    "/api/v1/auth/2fa/enroll": {
-      "post": {
-        "operationId": "SecurityFlowsController_enroll[0]",
+        "operationId": "SecurityFlowsController_pinSetup",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -4458,7 +2271,7 @@
     },
     "/auth/2fa/enroll": {
       "post": {
-        "operationId": "SecurityFlowsController_enroll[1]",
+        "operationId": "SecurityFlowsController_enroll",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -4485,38 +2298,9 @@
         ]
       }
     },
-    "/api/v1/auth/2fa/confirm": {
-      "post": {
-        "operationId": "SecurityFlowsController_confirm[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OtpDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "security flows"
-        ]
-      }
-    },
     "/auth/2fa/confirm": {
       "post": {
-        "operationId": "SecurityFlowsController_confirm[1]",
+        "operationId": "SecurityFlowsController_confirm",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -4524,35 +2308,6 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/OtpDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "security flows"
-        ]
-      }
-    },
-    "/api/v1/auth/2fa/login/verify": {
-      "post": {
-        "operationId": "SecurityFlowsController_login[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MfaLoginDto"
               }
             }
           }
@@ -4574,7 +2329,7 @@
     },
     "/auth/2fa/login/verify": {
       "post": {
-        "operationId": "SecurityFlowsController_login[1]",
+        "operationId": "SecurityFlowsController_login",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -4591,40 +2346,8 @@
             "description": ""
           }
         },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "security flows"
-        ]
-      }
-    },
-    "/api/v1/auth/2fa/disable": {
-      "post": {
-        "operationId": "SecurityFlowsController_disable[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DisableMfaDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
+        "security": [],
+        "summary": "",
         "tags": [
           "security flows"
         ]
@@ -4632,7 +2355,7 @@
     },
     "/auth/2fa/disable": {
       "post": {
-        "operationId": "SecurityFlowsController_disable[1]",
+        "operationId": "SecurityFlowsController_disable",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -4640,35 +2363,6 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/DisableMfaDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "security flows"
-        ]
-      }
-    },
-    "/api/v1/auth/biometric/registration/options": {
-      "post": {
-        "operationId": "SecurityFlowsController_registrationOptions[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StepDto"
               }
             }
           }
@@ -4690,7 +2384,7 @@
     },
     "/auth/biometric/registration/options": {
       "post": {
-        "operationId": "SecurityFlowsController_registrationOptions[1]",
+        "operationId": "SecurityFlowsController_registrationOptions",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -4698,35 +2392,6 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/StepDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "security flows"
-        ]
-      }
-    },
-    "/api/v1/auth/biometric/registration/verify": {
-      "post": {
-        "operationId": "SecurityFlowsController_register[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegistrationProofDto"
               }
             }
           }
@@ -4748,7 +2413,7 @@
     },
     "/auth/biometric/registration/verify": {
       "post": {
-        "operationId": "SecurityFlowsController_register[1]",
+        "operationId": "SecurityFlowsController_register",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -4775,38 +2440,9 @@
         ]
       }
     },
-    "/api/v1/auth/step-up/biometric/challenge": {
-      "post": {
-        "operationId": "SecurityFlowsController_challenge[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/BiometricChallengeDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "security flows"
-        ]
-      }
-    },
     "/auth/step-up/biometric/challenge": {
       "post": {
-        "operationId": "SecurityFlowsController_challenge[1]",
+        "operationId": "SecurityFlowsController_challenge",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -4814,35 +2450,6 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/BiometricChallengeDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "security flows"
-        ]
-      }
-    },
-    "/api/v1/auth/step-up/biometric": {
-      "post": {
-        "operationId": "SecurityFlowsController_verify[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AuthenticationProofDto"
               }
             }
           }
@@ -4864,7 +2471,7 @@
     },
     "/auth/step-up/biometric": {
       "post": {
-        "operationId": "SecurityFlowsController_verify[1]",
+        "operationId": "SecurityFlowsController_verify",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -4891,67 +2498,10 @@
         ]
       }
     },
-    "/api/v1/security/biometric-credentials": {
-      "get": {
-        "operationId": "SecurityFlowsController_credentials[0]",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "security flows"
-        ]
-      }
-    },
     "/security/biometric-credentials": {
       "get": {
-        "operationId": "SecurityFlowsController_credentials[1]",
+        "operationId": "SecurityFlowsController_credentials",
         "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "security flows"
-        ]
-      }
-    },
-    "/api/v1/security/biometric-credentials/{id}": {
-      "delete": {
-        "operationId": "SecurityFlowsController_revokeCredential[0]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StepDto"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": ""
@@ -4969,7 +2519,7 @@
     },
     "/security/biometric-credentials/{id}": {
       "delete": {
-        "operationId": "SecurityFlowsController_revokeCredential[1]",
+        "operationId": "SecurityFlowsController_revokeCredential",
         "parameters": [
           {
             "name": "id",
@@ -5005,38 +2555,9 @@
         ]
       }
     },
-    "/api/v1/security/push-tokens": {
-      "post": {
-        "operationId": "SecurityFlowsController_pushToken[0]",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PushTokenDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "security flows"
-        ]
-      }
-    },
     "/security/push-tokens": {
       "post": {
-        "operationId": "SecurityFlowsController_pushToken[1]",
+        "operationId": "SecurityFlowsController_pushToken",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -5050,34 +2571,6 @@
         },
         "responses": {
           "201": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "security flows"
-        ]
-      }
-    },
-    "/api/v1/security/push-tokens/{id}": {
-      "delete": {
-        "operationId": "SecurityFlowsController_removePush[0]",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
             "description": ""
           }
         },
@@ -5093,7 +2586,7 @@
     },
     "/security/push-tokens/{id}": {
       "delete": {
-        "operationId": "SecurityFlowsController_removePush[1]",
+        "operationId": "SecurityFlowsController_removePush",
         "parameters": [
           {
             "name": "id",
@@ -5370,6 +2863,18 @@
         },
         "required": [
           "currency"
+        ]
+      },
+      "PaystackConfirmDto": {
+        "type": "object",
+        "properties": {
+          "reference": {
+            "type": "string",
+            "example": "invento-card-00000000-0000-4000-8000-000000000000"
+          }
+        },
+        "required": [
+          "reference"
         ]
       },
       "RegisterDto": {

@@ -20,6 +20,7 @@ import type { Response } from 'express';
 import type { AuthRequest } from '../auth/session.guard.js';
 import { ResourcesService } from './resources.service.js';
 import { FinanceService } from './finance.service.js';
+import { DemoPaymentService } from './demo-payment.service.js';
 import {
   UpdateProfileDto,
   QuoteDto,
@@ -33,6 +34,10 @@ import {
   DisputeDto,
   AccountPatchDto,
   CardPatchDto,
+  TopUpDto,
+  DemoCardLinkInitDto,
+  DemoCardLinkConfirmDto,
+  DemoPaymentAuthorizeDto,
 } from './dto.js';
 import {
   PageDto,
@@ -42,11 +47,12 @@ import {
 } from './query.dto.js';
 @ApiTags('resources')
 @ApiBearerAuth()
-@Controller(['api/v1', ''])
+@Controller('')
 export class ApiController {
   constructor(
     @Inject(ResourcesService) private service: ResourcesService,
     @Inject(FinanceService) private finance: FinanceService,
+    @Inject(DemoPaymentService) private demoPayment: DemoPaymentService,
   ) {}
   @Get('users/me') user(@Req() r: AuthRequest) {
     return this.service.user(r.session);
@@ -125,6 +131,24 @@ export class ApiController {
   }
   @Post('transfers/quote') quote(@Req() r: AuthRequest, @Body() dto: QuoteDto) {
     return this.finance.quote(r.session, dto);
+  }
+  @Get('accounts/:id/receiving-details') receivingDetails(
+    @Req() r: AuthRequest,
+    @Param('id', ParseUUIDPipe) id: string,
+  ) {
+    return this.finance.receivingDetails(r.session, id);
+  }
+  @Get('transfers/recipients/:identifier') recipient(
+    @Param('identifier', ParseUUIDPipe) identifier: string,
+  ) {
+    return this.finance.lookupRecipient(identifier);
+  }
+  @ApiHeader({ name: 'Idempotency-Key', required: true })
+  @Post('sandbox/top-ups') topUp(
+    @Req() r: AuthRequest, @Body() dto: TopUpDto,
+    @Headers('idempotency-key') key?: string,
+  ) {
+    return this.finance.topUp(r.session, dto, key);
   }
   @ApiHeader({ name: 'Idempotency-Key', required: true })
   @Post('transfers')
@@ -210,6 +234,29 @@ export class ApiController {
     @Param('id', ParseUUIDPipe) id: string,
   ) {
     return this.service.cardAction(r.session, id, 'delete');
+  }
+  @Post('demo/card-link/initialize') demoCardLinkInit(
+    @Req() r: AuthRequest,
+    @Body() dto: DemoCardLinkInitDto,
+  ) {
+    return this.demoPayment.initializeCardLink(r.session);
+  }
+  @Post('demo/card-link/confirm') demoCardLinkConfirm(
+    @Req() r: AuthRequest,
+    @Body() dto: DemoCardLinkConfirmDto,
+  ) {
+    return this.demoPayment.confirmCardLink(dto.reference, r.session.userId, dto.simulate as any);
+  }
+  @Get('demo/payment/authorize') demoPaymentAuthorize(
+    @Query() query: DemoPaymentAuthorizeDto,
+  ) {
+    return this.demoPayment.authorizePage(query.reference);
+  }
+  @Post('demo/payment/simulate') demoPaymentSimulate(
+    @Req() r: AuthRequest,
+    @Body() dto: DemoPaymentAuthorizeDto,
+  ) {
+    return this.demoPayment.simulateOutcome(dto.reference, dto.outcome as any);
   }
   @Get('investments/products') products(@Query() query: ProductsQueryDto) {
     return this.service.products(undefined, query);

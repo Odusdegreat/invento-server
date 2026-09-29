@@ -1,0 +1,26 @@
+meta {
+  name: POST /auth/biometric/registration/options
+  type: http
+  seq: 86
+}
+
+post {
+  url: {{baseUrl}}/auth/biometric/registration/options
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "stepUpToken": "{{stepUpToken}}"
+  }
+}
+
+script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
+}

@@ -1,7 +1,7 @@
 meta {
   name: GET /beneficiaries
   type: http
-  seq: 18
+  seq: 20
 }
 
 get {
@@ -15,5 +15,7 @@ auth:bearer {
 }
 
 script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
   if (res.body.length) bru.setVar("beneficiaryId", res.body[0].id);
 }

@@ -1,0 +1,20 @@
+meta {
+  name: POST /security/devices/{id}/revoke
+  type: http
+  seq: 59
+}
+
+post {
+  url: {{baseUrl}}/security/devices/{{deviceId}}/revoke
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+script:post-response {
+  if (res.body.challengeToken) bru.setVar("challengeToken",res.body.challengeToken);
+  if (res.body.setupToken) bru.setVar("setupToken",res.body.setupToken);
+}
