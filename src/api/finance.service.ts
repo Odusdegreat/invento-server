@@ -69,7 +69,7 @@ export class FinanceService {
       fail('validation_error', 'A valid Idempotency-Key is required');
     const amount = minor(dto.amount);
     if (amount > 100000000n) fail('invalid_amount', 'Maximum top-up is 1000000');
-    const requestHash = digest(JSON.stringify({ action: 'top_up', accountId: dto.accountId, amount: dto.amount }));
+    const requestHash = digest(JSON.stringify({ action: 'top_up', accountId: dto.accountId, amount: dto.amount, currency: dto.currency }));
     return this.db.sql.begin(async tx => {
       await this.auth.lock(tx, s);
       const [cached] = await tx`select * from idempotency_keys where "userId"=${s.userId} and key=${key}`;
@@ -78,14 +78,17 @@ export class FinanceService {
         return cached.response;
       }
       const account = await this.account(tx, s, dto.accountId);
+      if (account.currency !== dto.currency) {
+        fail('currency_mismatch', 'Account currency does not match top-up currency', 400);
+      }
       const opening = await this.ledger.system(tx, 'opening', account.currency as string);
       const reference = 'TOP-' + id();
       const journal = await this.ledger.post(tx, reference, [
         { accountId: opening, side: 'debit', amount },
         { accountId: account.ledgerId as string, side: 'credit', amount },
       ]);
-      const [transaction] = await tx`insert into transactions(id,"userId","accountId","journalEntryId",amount,currency,kind,category,description,counterparty,status,reference) values (${id()},${s.userId},${dto.accountId},${journal},${money(amount)},${account.currency},'in','income','Sandbox top-up','Invento Sandbox','completed',${reference}) returning id,"accountId",amount,currency,status,reference`;
-      const response = numericRows({ ...transaction, balance: money(await this.ledger.balance(tx, dto.accountId)), simulated: true });
+      const [transaction] = await tx`insert into transactions(id,"userId","accountId","journalEntryId",amount,currency,kind,category,description,counterparty,status,reference,"createdAt") values (${id()},${s.userId},${dto.accountId},${journal},${money(amount)},${account.currency},'in','income','Sandbox top-up','Invento Sandbox','completed',${reference},now()) returning id,"accountId",amount,currency,status,"createdAt"`;
+      const response = { id: transaction.id, accountId: transaction.accountId, amount: money(transaction.amount), currency: transaction.currency, status: transaction.status, createdAt: transaction.createdAt };
       await tx`insert into idempotency_keys("userId",key,"requestHash",response) values (${s.userId},${key},${requestHash},${tx.json(response)})`;
       return response;
     });

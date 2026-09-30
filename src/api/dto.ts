@@ -113,6 +113,9 @@ export class TopUpDto {
   @ApiProperty() @IsUUID() accountId: string;
   @ApiProperty() @IsNumber({ maxDecimalPlaces: 2 }) @Min(0.01) @Max(1000000)
   amount: number;
+  @ApiProperty({ enum: ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY', 'INR', 'NGN', 'KES', 'ZAR', 'GHS'] })
+  @IsIn(['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY', 'INR', 'NGN', 'KES', 'ZAR', 'GHS'])
+  currency: string;
 }
 export class BeneficiaryDto extends StepDto {
   @ApiProperty() @IsString() @Length(1, 100) name: string;
