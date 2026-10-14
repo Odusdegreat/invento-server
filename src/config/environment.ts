@@ -90,6 +90,9 @@ export function validateEnvironment(input: Record<string, unknown>) {
   const port = Number(input.PORT ?? 3000);
   if (!Number.isInteger(port) || port < 1 || port > 65535)
     throw new Error('PORT must be an integer between 1 and 65535');
+  const rateLimitPerMinute = Number(input.RATE_LIMIT_PER_MINUTE ?? 120);
+  if (!Number.isInteger(rateLimitPerMinute) || rateLimitPerMinute < 1)
+    throw new Error('RATE_LIMIT_PER_MINUTE must be a positive integer');
   const url = read('SUPABASE_URL');
   let parsed: URL;
   try {
@@ -130,6 +133,7 @@ export function validateEnvironment(input: Record<string, unknown>) {
     ...input,
     NODE_ENV: environment,
     PORT: port,
+    RATE_LIMIT_PER_MINUTE: rateLimitPerMinute,
     SUPABASE_URL: url,
     SUPABASE_SERVICE_ROLE_KEY: key,
     CORS_ORIGINS: origins.join(','),

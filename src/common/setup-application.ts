@@ -12,6 +12,7 @@ import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import type { Request, Response, NextFunction } from 'express';
 import { ApiError } from './api-error.js';
+import { validationError } from './validation-error.js';
 @Catch()
 export class ApiExceptionFilter implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost) {
@@ -88,26 +89,11 @@ export function setupApplication(app: INestApplication) {
       whitelist: true,
       forbidNonWhitelisted: true,
       validationError: { target: false, value: false },
-      exceptionFactory: (errors) =>
-        errors.some((e) => ['amount', 'units'].includes(e.property))
-          ? new ApiError(
-              400,
-              'invalid_amount',
-              'Amount or units are outside supported limits',
-            )
-          : new ApiError(
-              400,
-              'validation_error',
-              'Request fields failed validation',
-            ),
+      exceptionFactory: validationError,
     }),
   );
   app.useGlobalFilters(new ApiExceptionFilter());
-  SwaggerModule.setup(
-    'api/docs',
-    app,
-    createApiDocument(app),
-  );
+  SwaggerModule.setup('api/docs', app, createApiDocument(app));
   app.enableShutdownHooks();
 }
 

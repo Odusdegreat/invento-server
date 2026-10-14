@@ -83,8 +83,12 @@ export class ResetConfirmDto {
   @ApiProperty() @IsString() @Length(1, 128) newPassword: string;
 }
 export class QuoteDto {
-  @ApiPropertyOptional({ description: 'Shareable account UUID for an internal sandbox transfer' })
-  @IsOptional() @IsUUID() recipientAccountId?: string;
+  @ApiPropertyOptional({
+    description: 'Shareable account UUID for an internal sandbox transfer',
+  })
+  @IsOptional()
+  @IsUUID()
+  recipientAccountId?: string;
   @ApiProperty() @IsUUID() fromAccountId: string;
   @ApiProperty()
   @IsNumber({ maxDecimalPlaces: 2 })
@@ -96,7 +100,9 @@ export class QuoteDto {
 export class TransferDto extends QuoteDto {
   @ApiPropertyOptional() @IsOptional() @IsUUID() beneficiaryId?: string;
   @ApiPropertyOptional({ enum: ['success', 'failure'] })
-  @IsOptional() @IsIn(['success', 'failure']) simulationOutcome?: string;
+  @IsOptional()
+  @IsIn(['success', 'failure'])
+  simulationOutcome?: string;
   @ApiPropertyOptional() @IsOptional() @IsNumber() fee?: number;
   @ApiPropertyOptional()
   @IsOptional()
@@ -111,10 +117,39 @@ export class TransferDto extends QuoteDto {
 }
 export class TopUpDto {
   @ApiProperty() @IsUUID() accountId: string;
-  @ApiProperty() @IsNumber({ maxDecimalPlaces: 2 }) @Min(0.01) @Max(1000000)
+  @ApiProperty()
+  @IsNumber({ maxDecimalPlaces: 2 })
+  @Min(0.01)
+  @Max(1000000)
   amount: number;
-  @ApiProperty({ enum: ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY', 'INR', 'NGN', 'KES', 'ZAR', 'GHS'] })
-  @IsIn(['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY', 'INR', 'NGN', 'KES', 'ZAR', 'GHS'])
+  @ApiProperty({
+    enum: [
+      'USD',
+      'EUR',
+      'GBP',
+      'CAD',
+      'AUD',
+      'JPY',
+      'INR',
+      'NGN',
+      'KES',
+      'ZAR',
+      'GHS',
+    ],
+  })
+  @IsIn([
+    'USD',
+    'EUR',
+    'GBP',
+    'CAD',
+    'AUD',
+    'JPY',
+    'INR',
+    'NGN',
+    'KES',
+    'ZAR',
+    'GHS',
+  ])
   currency: string;
 }
 export class BeneficiaryDto extends StepDto {
@@ -185,15 +220,20 @@ export class DisputeDto {
 }
 export class DemoCardLinkInitDto {
   @ApiPropertyOptional({ enum: ['success', 'failed', 'pending'] })
-  @IsOptional() @IsIn(['success', 'failed', 'pending']) defaultOutcome?: string;
+  @IsOptional()
+  @IsIn(['success', 'failed', 'pending'])
+  defaultOutcome?: string;
 }
 export class DemoCardLinkConfirmDto {
   @ApiProperty() @IsString() @Length(1, 50) reference: string;
   @ApiPropertyOptional({ enum: ['success', 'failed', 'pending'] })
-  @IsOptional() @IsIn(['success', 'failed', 'pending']) simulate?: string;
+  @IsOptional()
+  @IsIn(['success', 'failed', 'pending'])
+  simulate?: string;
 }
 export class DemoPaymentAuthorizeDto {
   @ApiProperty() @IsString() @Length(1, 50) reference: string;
   @ApiProperty({ enum: ['success', 'failed', 'pending'] })
-  @IsIn(['success', 'failed', 'pending']) outcome: string;
+  @IsIn(['success', 'failed', 'pending'])
+  outcome: string;
 }

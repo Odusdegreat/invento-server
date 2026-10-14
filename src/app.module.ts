@@ -4,6 +4,9 @@ import { ConfigurationModule } from './config/configuration.module.js';
 import { DatabaseModule } from './database/database.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { Public, SessionGuard } from './auth/session.guard.js';
+import { AccountsModule } from './accounts/accounts.module.js';
+import { ExternalTransfersModule } from './external-transfers/external-transfers.module.js';
+import { RateLimitGuard, RateLimiter } from './common/rate-limit.js';
 import { LedgerService } from './ledger/ledger.service.js';
 import { FinanceService } from './api/finance.service.js';
 import { ResourcesService } from './api/resources.service.js';
@@ -16,13 +19,21 @@ class HealthController {
   }
 }
 @Module({
-  imports: [ConfigurationModule, DatabaseModule, AuthModule],
+  imports: [
+    ConfigurationModule,
+    DatabaseModule,
+    AuthModule,
+    AccountsModule,
+    ExternalTransfersModule,
+  ],
   controllers: [HealthController, ApiController],
   providers: [
     LedgerService,
     FinanceService,
     ResourcesService,
     DemoPaymentService,
+    RateLimiter,
+    { provide: APP_GUARD, useClass: RateLimitGuard },
     { provide: APP_GUARD, useClass: SessionGuard },
   ],
 })

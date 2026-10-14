@@ -144,8 +144,10 @@ export class ApiController {
     return this.finance.lookupRecipient(identifier);
   }
   @ApiHeader({ name: 'Idempotency-Key', required: true })
-  @Post('sandbox/top-ups') topUp(
-    @Req() r: AuthRequest, @Body() dto: TopUpDto,
+  @Post('sandbox/top-ups')
+  topUp(
+    @Req() r: AuthRequest,
+    @Body() dto: TopUpDto,
     @Headers('idempotency-key') key?: string,
   ) {
     return this.finance.topUp(r.session, dto, key);
@@ -245,7 +247,11 @@ export class ApiController {
     @Req() r: AuthRequest,
     @Body() dto: DemoCardLinkConfirmDto,
   ) {
-    return this.demoPayment.confirmCardLink(dto.reference, r.session.userId, dto.simulate as any);
+    return this.demoPayment.confirmCardLink(
+      dto.reference,
+      r.session.userId,
+      dto.simulate as any,
+    );
   }
   @Get('demo/payment/authorize') demoPaymentAuthorize(
     @Query() query: DemoPaymentAuthorizeDto,

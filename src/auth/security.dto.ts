@@ -1,11 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsString,
-  Length,
-  Matches,
-  IsIn,
-  IsObject,
-} from 'class-validator';
+import { IsString, Length, Matches, IsIn, IsObject } from 'class-validator';
 import { actions, StepDto } from '../api/dto.js';
 import type {
   AuthenticationResponseJSON,

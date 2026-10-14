@@ -3,7 +3,7 @@ import { v7 as id } from 'uuid';
 import { DatabaseService, type Tx } from '../database/database.service.js';
 import { AuthService, userView, type Session } from '../auth/auth.service.js';
 import { fail } from '../common/api-error.js';
-import { numericRows } from './finance.service.js';
+import { jsonRows } from '../common/json.js';
 import type {
   UpdateProfileDto,
   BeneficiaryDto,
@@ -54,7 +54,7 @@ export class ResourcesService {
     const rows = await this.db
       .sql`select a.id,a.name,a.kind,a.currency,a."maskedNumber",a."interestRate",a.frozen,a."createdAt",b."balanceMinor"::numeric/100 as balance from accounts a join account_balances b on b.id=a.id where a."userId"=${s.userId} ${accountId ? this.db.sql`and a.id=${accountId}` : this.db.sql``} order by a."createdAt",a.id`;
     if (accountId && !rows.length) fail('not_found', 'Account not found', 404);
-    return numericRows(accountId ? rows[0] : rows);
+    return jsonRows(accountId ? rows[0] : rows);
   }
   async totals(s: Session) {
     const rows = await this.db
@@ -64,7 +64,7 @@ export class ResourcesService {
         rows.find((r) => r.currency === 'USD')?.balance ?? 0,
       ),
       currency: 'USD',
-      balances: numericRows(rows),
+      balances: jsonRows(rows),
     };
   }
   async freezeAccount(s: Session, accountId: string, frozen: boolean) {
@@ -88,7 +88,7 @@ export class ResourcesService {
    ${query.to ? sql`and "createdAt"<${query.to}::timestamptz` : sql``}
    ${query.before ? sql`and id<${query.before}` : sql``}
    order by id desc limit ${query.limit}`;
-    return numericRows(rows);
+    return jsonRows(rows);
   }
   validateTransactionQuery(query: TransactionQueryDto) {
     if (query.kind && query.type && query.kind !== query.type)
@@ -107,7 +107,7 @@ export class ResourcesService {
     this.validateTransactionQuery(query);
     if (query.accountId) await this.accounts(s, query.accountId);
     const sql = this.db.sql;
-    return numericRows(
+    return jsonRows(
       await this.db.sql`select currency,
       coalesce(sum(case when kind='in' then amount-fee else 0 end),0) as inflow,
       coalesce(sum(case when kind='out' then amount+fee else 0 end),0) as outflow
@@ -124,13 +124,13 @@ export class ResourcesService {
     const [row] = await this.db
       .sql`select id,"accountId",amount,fee,currency,kind,category,description,counterparty,"cardLast4",status,reference,"createdAt" from transactions where id=${transactionId} and "userId"=${s.userId}`;
     if (!row) fail('not_found', 'Transaction not found', 404);
-    return numericRows(row);
+    return jsonRows(row);
   }
   async transfer(s: Session, transferId: string) {
     const [row] = await this.db
       .sql`select t.id,t."fromAccountId",t."beneficiaryId",t."recipientAccountId",t."transactionId",t.amount,t.fee,t.amount+t.fee as total,case when t.status='failed' then 0 else t.amount+t.fee end as "debitedAmount",true as simulated,t.currency,t.note,t.reference,t.status,t."createdAt",x.counterparty from transfers t join transactions x on x.id=t."transactionId" where t.id=${transferId} and t."userId"=${s.userId}`;
     if (!row) fail('not_found', 'Transfer not found', 404);
-    return numericRows(row);
+    return jsonRows(row);
   }
   async beneficiaries(s: Session) {
     return this.db
@@ -198,16 +198,16 @@ export class ResourcesService {
       ${query.assetClass ? sql`and "assetClass"=${query.assetClass}` : sql``}
       ${query.search ? sql`and (strpos(lower(name),lower(${query.search}))>0 or strpos(lower(ticker),lower(${query.search}))>0)` : sql``} order by ticker`;
     if (productId && !rows.length) fail('not_found', 'Product not found', 404);
-    return numericRows(productId ? rows[0] : rows);
+    return jsonRows(productId ? rows[0] : rows);
   }
   async holdings(s: Session) {
-    return numericRows(
+    return jsonRows(
       await this.db
         .sql`select id,"productId",units,"averageCost","addedAt" from holdings where "userId"=${s.userId} and units>0 order by id`,
     );
   }
   async orders(s: Session) {
-    return numericRows(
+    return jsonRows(
       await this.db
         .sql`select id,"productId",side,units,price,total,fee,status,"createdAt" from investment_orders where "userId"=${s.userId} order by id desc limit 100`,
     );
@@ -222,7 +222,7 @@ export class ResourcesService {
     const [row] = await this.db
       .sql`select id,"productId",side,units,price,total,fee,status,"createdAt" from investment_orders where id=${orderId} and "userId"=${s.userId}`;
     if (!row) fail('not_found', 'Order not found', 404);
-    return numericRows(row);
+    return jsonRows(row);
   }
   async updateCard(s: Session, cardId: string, dto: CardPatchDto) {
     return this.mutation(s, async (tx) => {

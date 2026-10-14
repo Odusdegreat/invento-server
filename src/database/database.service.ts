@@ -24,6 +24,20 @@ export class DatabaseService implements OnModuleDestroy {
       prepare: false,
       connect_timeout: 10,
       idle_timeout: 20,
+      // postgres.js parses int2/int4/int8/float as numbers but leaves numeric
+      // (oid 1700) as a string to preserve precision. Every money and rate
+      // column here is numeric, so parse it once at the driver instead of
+      // guessing from column names after the row has been read. `to: 0` keeps
+      // the default behaviour of letting PostgreSQL infer each parameter's
+      // type from context, so writes are unaffected.
+      types: {
+        money: {
+          to: 0,
+          from: [1700],
+          serialize: (value: number) => '' + value,
+          parse: (raw: string) => Number(raw),
+        },
+      },
       connection: { search_path: 'invento,public', statement_timeout: 15000 },
     });
   }

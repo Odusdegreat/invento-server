@@ -1,4 +1,6 @@
 import { fail } from './api-error.js';
+
+// Validates a client-supplied major-unit amount and returns minor units.
 export function minor(value: number): bigint {
   if (
     !Number.isFinite(value) ||
@@ -12,6 +14,14 @@ export function minor(value: number): bigint {
     );
   return BigInt(Math.round(value * 100));
 }
+
+// The inverse of money(), for a trusted major-unit value that was read back
+// from a numeric column. Unlike minor() this accepts zero, because a stored
+// fee or reversal leg may legitimately be nothing.
+export function toMinor(value: number): bigint {
+  return BigInt(Math.round(value * 100));
+}
+
 export function money(value: bigint): number {
   return Number(value) / 100;
 }

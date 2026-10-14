@@ -575,6 +575,108 @@
         ]
       }
     },
+    "/accounts/{id}/receiving-details": {
+      "get": {
+        "operationId": "ApiController_receivingDetails",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "resources"
+        ]
+      }
+    },
+    "/transfers/recipients/{identifier}": {
+      "get": {
+        "operationId": "ApiController_recipient",
+        "parameters": [
+          {
+            "name": "identifier",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "resources"
+        ]
+      }
+    },
+    "/sandbox/top-ups": {
+      "post": {
+        "operationId": "ApiController_topUp",
+        "parameters": [
+          {
+            "name": "idempotency-key",
+            "required": true,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TopUpDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "resources"
+        ]
+      }
+    },
     "/transfers": {
       "post": {
         "operationId": "ApiController_send",
@@ -982,6 +1084,134 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/FrozenDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "resources"
+        ]
+      }
+    },
+    "/demo/card-link/initialize": {
+      "post": {
+        "operationId": "ApiController_demoCardLinkInit",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DemoCardLinkInitDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "resources"
+        ]
+      }
+    },
+    "/demo/card-link/confirm": {
+      "post": {
+        "operationId": "ApiController_demoCardLinkConfirm",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DemoCardLinkConfirmDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "resources"
+        ]
+      }
+    },
+    "/demo/payment/authorize": {
+      "get": {
+        "operationId": "ApiController_demoPaymentAuthorize",
+        "parameters": [
+          {
+            "name": "reference",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "outcome",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "success",
+                "failed",
+                "pending"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "resources"
+        ]
+      }
+    },
+    "/demo/payment/simulate": {
+      "post": {
+        "operationId": "ApiController_demoPaymentSimulate",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DemoPaymentAuthorizeDto"
               }
             }
           }
@@ -1737,79 +1967,6 @@
         ],
         "tags": [
           "resources"
-        ]
-      }
-    },
-    "/cards/link/initialize": {
-      "post": {
-        "operationId": "PaystackController_initialize",
-        "parameters": [],
-        "responses": {
-          "201": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "Paystack sandbox"
-        ]
-      }
-    },
-    "/cards/link/confirm": {
-      "post": {
-        "operationId": "PaystackController_confirm",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PaystackConfirmDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": ""
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "tags": [
-          "Paystack sandbox"
-        ]
-      }
-    },
-    "/webhooks/paystack": {
-      "post": {
-        "operationId": "PaystackController_webhook",
-        "parameters": [
-          {
-            "name": "x-paystack-signature",
-            "required": true,
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "security": [],
-        "summary": "",
-        "tags": [
-          "Paystack sandbox"
         ]
       }
     },
@@ -2611,6 +2768,242 @@
           "security flows"
         ]
       }
+    },
+    "/external-banks": {
+      "get": {
+        "operationId": "ExternalBanksController_banks",
+        "parameters": [
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "external-transfers"
+        ]
+      }
+    },
+    "/external-transfers/quote": {
+      "post": {
+        "operationId": "ExternalTransfersController_quote",
+        "parameters": [
+          {
+            "name": "X-RateLimit-Limit",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalTransferQuoteDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "external-transfers"
+        ]
+      }
+    },
+    "/external-transfers": {
+      "post": {
+        "operationId": "ExternalTransfersController_create",
+        "parameters": [
+          {
+            "name": "idempotency-key",
+            "required": true,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalTransferDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "external-transfers"
+        ]
+      },
+      "get": {
+        "operationId": "ExternalTransfersController_list",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "maximum": 100,
+              "default": 50,
+              "type": "number"
+            }
+          },
+          {
+            "name": "before",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "completed",
+                "failed",
+                "cancelled"
+              ]
+            }
+          },
+          {
+            "name": "accountId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "external-transfers"
+        ]
+      }
+    },
+    "/external-transfers/{id}": {
+      "get": {
+        "operationId": "ExternalTransfersController_detail",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "external-transfers"
+        ]
+      }
+    },
+    "/external-transfers/{id}/cancel": {
+      "post": {
+        "operationId": "ExternalTransfersController_cancel",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelExternalTransferDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "external-transfers"
+        ]
+      }
     }
   },
   "info": {
@@ -2673,6 +3066,10 @@
       "QuoteDto": {
         "type": "object",
         "properties": {
+          "recipientAccountId": {
+            "type": "string",
+            "description": "Shareable account UUID for an internal sandbox transfer"
+          },
           "fromAccountId": {
             "type": "string"
           },
@@ -2688,9 +3085,45 @@
           "amount"
         ]
       },
+      "TopUpDto": {
+        "type": "object",
+        "properties": {
+          "accountId": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string",
+            "enum": [
+              "USD",
+              "EUR",
+              "GBP",
+              "CAD",
+              "AUD",
+              "JPY",
+              "INR",
+              "NGN",
+              "KES",
+              "ZAR",
+              "GHS"
+            ]
+          }
+        },
+        "required": [
+          "accountId",
+          "amount",
+          "currency"
+        ]
+      },
       "TransferDto": {
         "type": "object",
         "properties": {
+          "recipientAccountId": {
+            "type": "string",
+            "description": "Shareable account UUID for an internal sandbox transfer"
+          },
           "fromAccountId": {
             "type": "string"
           },
@@ -2702,6 +3135,13 @@
           },
           "beneficiaryId": {
             "type": "string"
+          },
+          "simulationOutcome": {
+            "type": "string",
+            "enum": [
+              "success",
+              "failure"
+            ]
           },
           "fee": {
             "type": "number"
@@ -2715,8 +3155,7 @@
         },
         "required": [
           "fromAccountId",
-          "amount",
-          "beneficiaryId"
+          "amount"
         ]
       },
       "BeneficiaryDto": {
@@ -2750,7 +3189,6 @@
               "visa",
               "mastercard",
               "amex",
-              "paystack",
               "bank"
             ]
           },
@@ -2795,6 +3233,58 @@
             "type": "boolean"
           }
         }
+      },
+      "DemoCardLinkInitDto": {
+        "type": "object",
+        "properties": {
+          "defaultOutcome": {
+            "type": "string",
+            "enum": [
+              "success",
+              "failed",
+              "pending"
+            ]
+          }
+        }
+      },
+      "DemoCardLinkConfirmDto": {
+        "type": "object",
+        "properties": {
+          "reference": {
+            "type": "string"
+          },
+          "simulate": {
+            "type": "string",
+            "enum": [
+              "success",
+              "failed",
+              "pending"
+            ]
+          }
+        },
+        "required": [
+          "reference"
+        ]
+      },
+      "DemoPaymentAuthorizeDto": {
+        "type": "object",
+        "properties": {
+          "reference": {
+            "type": "string"
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "success",
+              "failed",
+              "pending"
+            ]
+          }
+        },
+        "required": [
+          "reference",
+          "outcome"
+        ]
       },
       "OrderDto": {
         "type": "object",
@@ -2863,18 +3353,6 @@
         },
         "required": [
           "currency"
-        ]
-      },
-      "PaystackConfirmDto": {
-        "type": "object",
-        "properties": {
-          "reference": {
-            "type": "string",
-            "example": "invento-card-00000000-0000-4000-8000-000000000000"
-          }
-        },
-        "required": [
-          "reference"
         ]
       },
       "RegisterDto": {
@@ -3168,6 +3646,80 @@
           "provider",
           "token"
         ]
+      },
+      "ExternalTransferQuoteDto": {
+        "type": "object",
+        "properties": {
+          "fromAccountId": {
+            "type": "string"
+          },
+          "externalBankId": {
+            "type": "string"
+          },
+          "accountNumber": {
+            "type": "string",
+            "description": "Destination account number at the external bank"
+          },
+          "amount": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "fromAccountId",
+          "externalBankId",
+          "accountNumber",
+          "amount"
+        ]
+      },
+      "ExternalTransferDto": {
+        "type": "object",
+        "properties": {
+          "fromAccountId": {
+            "type": "string"
+          },
+          "externalBankId": {
+            "type": "string"
+          },
+          "accountNumber": {
+            "type": "string",
+            "description": "Destination account number at the external bank"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "accountName": {
+            "type": "string"
+          },
+          "simulationOutcome": {
+            "type": "string",
+            "enum": [
+              "success",
+              "failure",
+              "pending"
+            ]
+          },
+          "note": {
+            "type": "string"
+          },
+          "stepUpToken": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "fromAccountId",
+          "externalBankId",
+          "accountNumber",
+          "amount",
+          "accountName"
+        ]
+      },
+      "CancelExternalTransferDto": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "number"
+          }
+        }
       }
     }
   }

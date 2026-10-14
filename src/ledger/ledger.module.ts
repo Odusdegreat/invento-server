@@ -3,5 +3,6 @@ import { LedgerService } from './ledger.service.js';
 
 @Module({
   providers: [LedgerService],
+  exports: [LedgerService],
 })
 export class LedgerModule {}

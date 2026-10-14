@@ -34,7 +34,11 @@ export class DemoPaymentService {
   private demoEnabled() {
     const provider = this.config.get<string>('PAYMENT_PROVIDER');
     if (provider !== 'simulated' && provider !== undefined) {
-      fail('payment_provider_mismatch', 'This deployment uses a different payment provider', 403);
+      fail(
+        'payment_provider_mismatch',
+        'This deployment uses a different payment provider',
+        403,
+      );
     }
   }
 
@@ -49,11 +53,13 @@ export class DemoPaymentService {
 
   async initializeCardLink(s: Session): Promise<DemoCardLinkInitResponse> {
     this.demoEnabled();
-    const [user] = await this.db.sql`select email, "fullName" from users where id=${s.userId}`;
+    const [user] = await this.db
+      .sql`select email, "fullName" from users where id=${s.userId}`;
     if (!user) fail('not_found', 'User not found', 404);
 
     const reference = this.generateReference();
-    await this.db.sql`insert into demo_card_links(reference,"userId",email,outcome) values (${reference},${s.userId},${user.email},'pending')`;
+    await this.db
+      .sql`insert into demo_card_links(reference,"userId",email,outcome) values (${reference},${s.userId},${user.email},'pending')`;
 
     const authUrl = `/demo/payment/authorize?reference=${encodeURIComponent(reference)}`;
     return {
@@ -72,7 +78,8 @@ export class DemoPaymentService {
     simulate?: SimulateOutcome,
   ): Promise<DemoCardLinkConfirmResponse> {
     this.demoEnabled();
-    const [link] = await this.db.sql`select * from demo_card_links where reference=${reference} and "userId"=${userId}`;
+    const [link] = await this.db
+      .sql`select * from demo_card_links where reference=${reference} and "userId"=${userId}`;
     if (!link) fail('not_found', 'Card link not found', 404);
 
     const outcome = simulate ?? (link.outcome as SimulateOutcome) ?? 'success';
@@ -82,25 +89,35 @@ export class DemoPaymentService {
     }
 
     if (outcome === 'failed') {
-      await this.db.sql`update demo_card_links set outcome='failed', "completedAt"=now() where reference=${reference}`;
+      await this.db
+        .sql`update demo_card_links set outcome='failed', "completedAt"=now() where reference=${reference}`;
       return { cardId: '', testMode: true, demo: true, status: 'failed' };
     }
 
     if (outcome === 'pending') {
-      await this.db.sql`update demo_card_links set outcome='pending' where reference=${reference}`;
+      await this.db
+        .sql`update demo_card_links set outcome='pending' where reference=${reference}`;
       return { cardId: '', testMode: true, demo: true, status: 'pending' };
     }
 
     return this.db.sql.begin(async (tx) => {
       await this.auth.lock(tx, { userId, deviceId: '' });
-      const [current] = await tx`select * from demo_card_links where reference=${reference} for update`;
+      const [current] =
+        await tx`select * from demo_card_links where reference=${reference} for update`;
       if (current.completedAt && current.cardId) {
-        return { cardId: current.cardId, testMode: true, demo: true, status: 'success' };
+        return {
+          cardId: current.cardId,
+          testMode: true,
+          demo: true,
+          status: 'success',
+        };
       }
 
-      const [user] = await tx`select "fullName" from users where id=${userId} for update`;
+      const [user] =
+        await tx`select "fullName" from users where id=${userId} for update`;
       const cardId = uuidv7();
-      const [count] = await tx`select count(*)::int as count from cards where "userId"=${userId}`;
+      const [count] =
+        await tx`select count(*)::int as count from cards where "userId"=${userId}`;
       await tx`insert into cards(id,"userId",brand,label,last4,expiry,holder,"isDefault") values
         (${cardId},${userId},'visa','Demo Card','4242','12/30',${user.fullName},${count.count === 0})`;
       await tx`update demo_card_links set outcome='success', "completedAt"=now(), "cardId"=${cardId} where reference=${reference}`;
@@ -110,14 +127,16 @@ export class DemoPaymentService {
 
   async authorizePage(reference: string) {
     this.demoEnabled();
-    const [link] = await this.db.sql`select outcome from demo_card_links where reference=${reference}`;
+    const [link] = await this.db
+      .sql`select outcome from demo_card_links where reference=${reference}`;
     if (!link) fail('not_found', 'Invalid reference', 404);
     return { reference, outcome: link.outcome as SimulateOutcome, demo: true };
   }
 
   async simulateOutcome(reference: string, outcome: SimulateOutcome) {
     this.demoEnabled();
-    await this.db.sql`update demo_card_links set outcome=${outcome} where reference=${reference}`;
+    await this.db
+      .sql`update demo_card_links set outcome=${outcome} where reference=${reference}`;
     return { reference, outcome, demo: true };
   }
 }

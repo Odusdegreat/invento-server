@@ -1,13 +1,14 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { createHash, randomBytes } from 'node:crypto';
+import { randomBytes } from 'node:crypto';
 import { MailService } from './mail.service.js';
 import { SecondFactorService } from './second-factor.service.js';
 import { hash, verify, argon2id } from 'argon2';
 import { v7 as id } from 'uuid';
 import { DatabaseService, type Tx } from '../database/database.service.js';
-import { fail } from '../common/api-error.js';
+import { ApiError, fail } from '../common/api-error.js';
+import { digest } from '../common/hash.js';
 import type {
   LoginDto,
   RegisterDto,
@@ -20,8 +21,7 @@ export interface Session {
   userId: string;
   deviceId: string;
 }
-export const digest = (value: string) =>
-  createHash('sha256').update(value).digest('hex');
+export { digest };
 const secret = () => randomBytes(32).toString('base64url');
 export const passwordHash = (value: string) =>
   hash(value, {
@@ -113,38 +113,47 @@ export class AuthService {
     return result;
   }
   async login(dto: LoginDto) {
-    const result = await this.db.sql.begin(async (tx) => {
-      const [user] =
-        await tx`select * from users where email=${dto.email.toLowerCase()} for update`;
-      if (!user) {
-        await passwordHash(dto.password);
-        return null;
+    try {
+      const result = await this.db.sql.begin(async (tx) => {
+        const [user] =
+          await tx`select * from users where email=${dto.email.toLowerCase()} for update`;
+        if (!user) {
+          await passwordHash(dto.password);
+          return null;
+        }
+        if (user.loginLockedUntil && new Date(user.loginLockedUntil) > new Date())
+          return null;
+        if (!(await verify(user.passwordHash as string, dto.password))) {
+          await tx`update users set "loginAttempts"="loginAttempts"+1,"loginLockedUntil"=case when "loginAttempts"+1>=5 then now()+interval '15 minutes' else null end where id=${user.id}`;
+          return null;
+        }
+        await tx`update users set "loginAttempts"=0,"loginLockedUntil"=null where id=${user.id}`;
+        const [settings] =
+          await tx`select "twoFactorEnabled" from security_settings where "userId"=${user.id}`;
+        if (settings.twoFactorEnabled) {
+          const challengeToken = secret();
+          await tx`update auth_challenges set "consumedAt"=now() where "userId"=${user.id} and purpose='mfa_login' and "consumedAt" is null`;
+          await tx`insert into auth_challenges(id,"userId",purpose,"tokenHash",payload,"expiresAt") values (${id()},${user.id},'mfa_login',${digest(challengeToken)},${tx.json({ deviceName: dto.deviceName ?? 'Mobile device' })},now()+interval '5 minutes')`;
+          return { requiresTwoFactor: true, challengeToken, expiresIn: 300 };
+        }
+        const deviceId = id();
+        await tx`insert into devices(id,"userId",name) values (${deviceId},${user.id},${dto.deviceName ?? 'Mobile device'})`;
+        return {
+          user: userView(user),
+          ...(await this.tokens(tx, user.id as string, deviceId)),
+        };
+      });
+      if (!result) fail('invalid_credentials', 'Email or password is incorrect', 401);
+      return result;
+    } catch (error) {
+      new Logger(AuthService.name).error(
+        `Authentication error: ${(error as Error).message}`,
+      );
+      if (error instanceof ApiError) {
+        throw error;
       }
-      if (user.loginLockedUntil && new Date(user.loginLockedUntil) > new Date())
-        return null;
-      if (!(await verify(user.passwordHash as string, dto.password))) {
-        await tx`update users set "loginAttempts"="loginAttempts"+1,"loginLockedUntil"=case when "loginAttempts"+1>=5 then now()+interval '15 minutes' else null end where id=${user.id}`;
-        return null;
-      }
-      await tx`update users set "loginAttempts"=0,"loginLockedUntil"=null where id=${user.id}`;
-      const [settings] =
-        await tx`select "twoFactorEnabled" from security_settings where "userId"=${user.id}`;
-      if (settings.twoFactorEnabled) {
-        const challengeToken = secret();
-        await tx`update auth_challenges set "consumedAt"=now() where "userId"=${user.id} and purpose='mfa_login' and "consumedAt" is null`;
-        await tx`insert into auth_challenges(id,"userId",purpose,"tokenHash",payload,"expiresAt") values (${id()},${user.id},'mfa_login',${digest(challengeToken)},${tx.json({ deviceName: dto.deviceName ?? 'Mobile device' })},now()+interval '5 minutes')`;
-        return { requiresTwoFactor: true, challengeToken, expiresIn: 300 };
-      }
-      const deviceId = id();
-      await tx`insert into devices(id,"userId",name) values (${deviceId},${user.id},${dto.deviceName ?? 'Mobile device'})`;
-      return {
-        user: userView(user),
-        ...(await this.tokens(tx, user.id as string, deviceId)),
-      };
-    });
-    if (!result)
-      fail('invalid_credentials', 'Email or password is incorrect', 401);
-    return result;
+      fail('internal_error', 'An unexpected error occurred during authentication', 500);
+    }
   }
   async session(token: string): Promise<Session> {
     try {

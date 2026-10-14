@@ -47,6 +47,8 @@ await test('complete simulated funding and two-user transfers', async () => {
     const tops = await Promise.all([1, 2].map(() => call(alice, 'post', '/sandbox/top-ups', topUp, 'fund-once')));
     assert.equal(tops[0].status, 201, JSON.stringify(tops[0].body));
     assert.deepEqual(tops[0].body, tops[1].body);
+    // The stored amount is in minor units but the response is in major units.
+    assert.equal(tops[0].body.amount, 1000);
     assert.equal(await balance(alice), 1000);
     assert.equal((await call(alice, 'post', '/sandbox/top-ups', { ...topUp, amount: 999 }, 'fund-once')).status, 409);
     const receiving = await call(bob, 'get', `/accounts/${bob.account.id}/receiving-details`);
